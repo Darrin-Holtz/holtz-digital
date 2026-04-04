@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  allowedDevOrigins: [
+    process.env.REPLIT_DOMAINS ?? "",
+  ].filter(Boolean),
 };
 
 export default nextConfig;
