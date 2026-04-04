@@ -16,6 +16,12 @@ export const authComponent = createClient<DataModel>(components.betterAuth);
 export const createAuth = (ctx: GenericCtx<DataModel>) => {
   return betterAuth({    
     baseURL: siteUrl,
+    // Trust requests proxied from the Next.js server (Replit dev and production domains)
+    trustedOrigins: [
+      ...(siteUrl ? [siteUrl] : []),
+      "https://*.replit.dev",
+      "https://*.replit.app",
+    ],
     database: authComponent.adapter(ctx),
     // Configure simple, non-verified email/password to get started
     emailAndPassword: {
