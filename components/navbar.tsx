@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
@@ -22,14 +22,13 @@ export function Navbar() {
             </div>
             <div className="flex items-center gap-2">
                 {isLoading ? null : isAuthenticated ? (
-                    <Button>Logout</Button>
-                ) : (
-                    <>
-
+                <Button>Logout</Button> ) : (
+                    <div>
                         <Link className={buttonVariants({ variant: "default" })} href="/auth/sign-up">Sign up</Link>
-                        <Link className={buttonVariants({ variant: "secondary" })} href="/auth/login">Login</Link> 
-                    </>    
+                        <Link className={buttonVariants({ variant: "secondary" })} href="/auth/login">Login</Link>
+                    </div>
                 )}
+                
                 <ThemeToggle />
             </div>
         </nav>
