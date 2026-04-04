@@ -1,6 +1,7 @@
 "use client";
 
 import { signUpSchema } from "@/app/schemas/auth";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -39,14 +40,29 @@ export default function SignUpPage() {
       </CardHeader>
       <CardContent>
         <form>
-            <FieldGroup>
+            <FieldGroup className="gap-y-4">
                 <Controller name="name" control={form.control} render={({ field, fieldState } ) => (
                     <Field>
                         <FieldLabel> Full Name</FieldLabel>
                         <Input placeholder="John Doe" {...field} />
-                        {fieldState.invalid && (<FieldError errors ={fieldState.error} />)}
+                        {fieldState.invalid && (<FieldError errors ={[fieldState.error]} />)}
                     </Field>
                 )}/>
+                <Controller name="email" control={form.control} render={({ field, fieldState } ) => (
+                    <Field>
+                        <FieldLabel> Email</FieldLabel>
+                        <Input placeholder="john.doe@example.com" {...field} />
+                        {fieldState.invalid && (<FieldError errors ={[fieldState.error]} />)}
+                    </Field>
+                )}/>
+                <Controller name="password" control={form.control} render={({ field, fieldState } ) => (
+                    <Field>
+                        <FieldLabel> Password</FieldLabel>
+                        <Input placeholder="••••••••" type="password" {...field} />
+                        {fieldState.invalid && (<FieldError errors ={[fieldState.error]} />)}
+                    </Field>
+                )}/>
+                <Button>Sign Up</Button>
             </FieldGroup>
         </form>
       </CardContent>
