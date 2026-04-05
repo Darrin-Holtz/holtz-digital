@@ -6,37 +6,36 @@ import { query } from "./_generated/server";
 import { betterAuth } from "better-auth/minimal";
 import authConfig from "./auth.config";
 
-
-const siteUrl = process.env.SITE_URL!;
-
-// The component client has methods needed for integrating Convex with Better Auth,
-// as well as helper methods for general use.
+// Convex Better Auth client
 export const authComponent = createClient<DataModel>(components.betterAuth);
 
+// Main auth factory
 export const createAuth = (ctx: GenericCtx<DataModel>) => {
-  return betterAuth({    
-    baseURL: siteUrl,
-    // Trust requests proxied from the Next.js server (Replit dev and production domains)
+  return betterAuth({
+    // ✅ Hardcode for now (simplest + works)
+    baseURL: "http://localhost:3000",
+
+    // ✅ This fixes your 403 error
     trustedOrigins: [
-      ...(siteUrl ? [siteUrl] : []),
-      "https://*.replit.dev",
-      "https://*.replit.app",
+      "http://localhost:3000",
+      "http://localhost:5000",
+      "https://secret-fish-571.convex.site",
     ],
+
     database: authComponent.adapter(ctx),
-    // Configure simple, non-verified email/password to get started
+
     emailAndPassword: {
       enabled: true,
       requireEmailVerification: false,
     },
+
     plugins: [
-      // The Convex plugin is required for Convex compatibility
       convex({ authConfig }),
     ],
-  })
-}
+  });
+};
 
-// Example function for getting the current user
-// Feel free to edit, omit, etc.
+// Example query
 export const getCurrentUser = query({
   args: {},
   handler: async (ctx) => {

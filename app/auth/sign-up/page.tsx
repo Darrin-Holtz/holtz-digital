@@ -9,7 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Field,FieldError,FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,7 +28,7 @@ type FormValues = {
 };
 
 export default function SignUpPage() {
-  const form = useForm({
+  const form = useForm<FormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: "",
@@ -33,13 +38,46 @@ export default function SignUpPage() {
   });
 
   async function onSubmit(data: z.infer<typeof signUpSchema>) {
-    await authClient.signUp.email({
+    console.log("Submitting signup for:", data.email);
+
+    const result = await authClient.signUp.email({
       email: data.email,
-      name: data.name,
       password: data.password,
-      
-    })
+      name: data.name || "",
+    });
+
+    if (result.error) {
+      console.error("SIGN UP ERROR:", JSON.stringify(result, null, 2));
+
+      // Handle "user already exists"
+      if (
+        result.error.code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL"
+      ) {
+        // Try logging in instead
+        const login = await authClient.signIn.email({
+          email: data.email,
+          password: data.password,
+        });
+
+        if (login.error) {
+          alert("Account exists, but password is incorrect.");
+        } else {
+          console.log("Logged in instead!", login);
+          alert("Welcome back! You are now signed in.");
+        }
+
+        return;
+      }
+
+      alert(result.error.message || "Signup failed");
+      return;
+    }
+
+    console.log("Sign up successful!", result);
+    alert("Account created successfully!");
   }
+
+  const isSubmitting = form.formState.isSubmitting;
 
   return (
     <Card>
@@ -51,40 +89,66 @@ export default function SignUpPage() {
       </CardHeader>
       <CardContent>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FieldGroup className="gap-y-4">
-                <Controller
-                  name="name"
-                  control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field>
-                      <FieldLabel>Full Name</FieldLabel>
-                      <Input
-                        aria-invalid={fieldState.invalid}
-                        placeholder="John Doe"
-                        {...field}
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
+          <FieldGroup className="gap-y-4">
+            <Controller
+              name="name"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field>
+                  <FieldLabel>Full Name</FieldLabel>
+                  <Input
+                    aria-invalid={fieldState.invalid}
+                    placeholder="John Doe"
+                    {...field}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
                   )}
-                />
-                <Controller name="email" control={form.control} render={({ field, fieldState } ) => (
-                    <Field>
-                        <FieldLabel> Email</FieldLabel>
-                        <Input aria-invalid={fieldState.invalid} placeholder="john.doe@example.com" {...field} />
-                        {fieldState.invalid && (<FieldError errors ={[fieldState.error]} />)}
-                    </Field>
-                )}/>
-                <Controller name="password" control={form.control} render={({ field, fieldState } ) => (
-                    <Field>
-                        <FieldLabel> Password</FieldLabel>
-                        <Input aria-invalid={fieldState.invalid} placeholder="••••••••" type="password" {...field} />
-                        {fieldState.invalid && (<FieldError errors ={[fieldState.error]} />)}
-                    </Field>
-                )}/>
-                <Button>Sign Up</Button>
-            </FieldGroup>
+                </Field>
+              )}
+            />
+
+            <Controller
+              name="email"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field>
+                  <FieldLabel>Email</FieldLabel>
+                  <Input
+                    aria-invalid={fieldState.invalid}
+                    placeholder="john.doe@example.com"
+                    {...field}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
+            <Controller
+              name="password"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field>
+                  <FieldLabel>Password</FieldLabel>
+                  <Input
+                    aria-invalid={fieldState.invalid}
+                    placeholder="••••••••"
+                    type="password"
+                    {...field}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Signing up..." : "Sign Up"}
+            </Button>
+          </FieldGroup>
         </form>
       </CardContent>
     </Card>
