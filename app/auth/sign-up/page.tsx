@@ -18,7 +18,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 
 type FormValues = {
@@ -28,6 +30,7 @@ type FormValues = {
 };
 
 export default function SignUpPage() {
+  const router = useRouter();
   const form = useForm<FormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -43,38 +46,17 @@ export default function SignUpPage() {
     const result = await authClient.signUp.email({
       email: data.email,
       password: data.password,
-      name: data.name || "",
-    });
-
-    if (result.error) {
-      console.error("SIGN UP ERROR:", JSON.stringify(result, null, 2));
-
-      // Handle "user already exists"
-      if (
-        result.error.code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL"
-      ) {
-        // Try logging in instead
-        const login = await authClient.signIn.email({
-          email: data.email,
-          password: data.password,
-        });
-
-        if (login.error) {
-          alert("Account exists, but password is incorrect.");
-        } else {
-          console.log("Logged in instead!", login);
-          alert("Welcome back! You are now signed in.");
+      name: data.name,
+      fetchOptions: {
+            onSuccess: () => {
+                toast.success("Successfully signed in.");
+                router.push("/")
+           },
+            onError: (error) => {
+                toast.error(error.error.message);
+            } 
         }
-
-        return;
-      }
-
-      alert(result.error.message || "Signup failed");
-      return;
-    }
-
-    console.log("Sign up successful!", result);
-    alert("Account created successfully!");
+    });    
   }
 
   const isSubmitting = form.formState.isSubmitting;
