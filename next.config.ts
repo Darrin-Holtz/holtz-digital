@@ -1,8 +1,17 @@
 import type { NextConfig } from "next";
 import path from "path";
 
-const nextConfig: NextConfig = {
-  allowedDevOrigins: ["*.replit.dev", "*.replit.app", "*.kirk.replit.dev"],
+export const runtime = "nodejs";
+
+const nextConfig: NextConfig = {  
+  experimental: {
+    serverActions: {
+      allowedOrigins: [
+        "supreme-journey-r474jx5r946qfwpw7-5000.app.github.dev",
+        "localhost:5000",
+      ],
+    },
+  },
   webpack: (config, { dev }) => {
     if (dev) {
       const root = path.resolve(__dirname);

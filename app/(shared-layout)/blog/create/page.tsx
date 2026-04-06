@@ -1,14 +1,13 @@
 'use client';
 
+import { createBlogAction } from "@/app/actions";
 import { postSchema } from "@/app/schemas/blog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { api } from "@/convex/_generated/api";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "convex/react";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
@@ -24,7 +23,6 @@ type FormValues = {
 export default function CreateRoute() {
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
-    const mutation = useMutation(api.posts.createPost);
     const form = useForm<FormValues>({
         resolver: zodResolver(postSchema),
         defaultValues: {
@@ -34,13 +32,9 @@ export default function CreateRoute() {
     });
 
     function onSubmit(values: z.infer<typeof postSchema>) {
-        startTransition(() => {
-            mutation({
-                body: values.content,
-                title: values.title,
-            });
-            toast.success("Post created successfully!");
-            router.push("/");
+        startTransition(async() => { 
+            console.log("Hey this runs on the client side");
+            await createBlogAction(values);
         })
     }
     return(
