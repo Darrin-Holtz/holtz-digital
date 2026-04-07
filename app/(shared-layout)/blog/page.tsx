@@ -7,6 +7,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 
+export const dynamic = "force-static";
+export const revalidate = 30;
+
 export default function BlogPage() {
   return (
     <div className="py-12">
@@ -35,7 +38,7 @@ async function LoadBlogList() {
         <Card key={post._id} className="pt-0">
           <div className="relative h-48 w-full overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1761019646782-4bc46ba43fe9?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              src={post.imageUrl ?? "https://images.unsplash.com/photo-1773754532196-014342510e64?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8"}
               alt="image"
               fill
               className="rounded-t-lg object-cover"

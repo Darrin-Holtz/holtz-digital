@@ -6,39 +6,30 @@ export const runtime = "nodejs";
 const nextConfig: NextConfig = {  
   experimental: {
     serverActions: {
+      bodySizeLimit: "5mb",
       allowedOrigins: [
         "supreme-journey-r474jx5r946qfwpw7-5000.app.github.dev",
         "localhost:5000",
       ],
     },
   },
+
+  turbopack: {},
+
   images: {
-    remotePatterns: [{
-      hostname: "images.unsplash.com",
-      protocol: "https",
-      port: "",
-    }]
-  },
-  webpack: (config, { dev }) => {
-    if (dev) {
-      const root = path.resolve(__dirname);
-      config.watchOptions = {
-        ...config.watchOptions,
-        ignored: new RegExp(
-          `(${[
-            `${root}/.git`,
-            `${root}/.next`,
-            `${root}/.cache`,
-            `${root}/.local`,
-            `${root}/node_modules`,
-          ]
-            .map((p) => p.replace(/[/\\]/g, "[\\/\\\\]"))
-            .join("|")})`
-        ),
-      };
-    }
-    return config;
-  },
+    remotePatterns: [
+      {
+        hostname: "images.unsplash.com",
+        protocol: "https",
+        port: "",
+      },
+      {
+        hostname: "secret-fish-571.convex.cloud",
+        protocol: "https",
+        port: "",
+      }
+    ]
+  },  
 };
 
 export default nextConfig;
