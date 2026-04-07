@@ -12,6 +12,13 @@ const nextConfig: NextConfig = {
       ],
     },
   },
+  images: {
+    remotePatterns: [{
+      hostname: "images.unsplash.com",
+      protocol: "https",
+      port: "",
+    }]
+  },
   webpack: (config, { dev }) => {
     if (dev) {
       const root = path.resolve(__dirname);
