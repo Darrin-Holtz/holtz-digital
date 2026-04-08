@@ -27,6 +27,11 @@ const nextConfig: NextConfig = {
         hostname: "secret-fish-571.convex.cloud",
         protocol: "https",
         port: "",
+      },
+      {
+        hostname: "avatar.vercel.sh",
+        protocol: "https",
+        port: "",
       }
     ]
   },  
