@@ -1,3 +1,4 @@
+import { CommentSection } from "@/components/CommentSection";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { api } from "@/convex/_generated/api";
@@ -41,6 +42,7 @@ export default async function PostIdRoute({ params }: PostIdRouteProps){
              <Separator className="my-8" />
             <p className="text-lg leading-relaxed text-foreground/90 whitespace-pre-wrap">{post.body}</p>
             <Separator className="my-8" />
+            <CommentSection />
         </div>
     )
 }
