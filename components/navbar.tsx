@@ -7,6 +7,7 @@ import { useConvexAuth } from "convex/react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { SearchInput } from "./SearchInput";
 
 export function Navbar() {
     const { isAuthenticated, isLoading } = useConvexAuth();
@@ -19,12 +20,15 @@ export function Navbar() {
                         Darrin<span className="text-blue-500">Holtz</span>
                     </h1>
                 </Link>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2">                    
                     <Link className={buttonVariants({ variant: "ghost" })} href="/blog">Blog</Link>
                     <Link className={buttonVariants({ variant: "ghost" })} href="/blog/create">Create</Link>
                 </div>                
             </div>
             <div className="flex items-center gap-2">
+                <div className="hidden md:block mr-2">
+                    <SearchInput />
+                </div>
                 {isLoading ? null : isAuthenticated ? (
                 <Button 
                     onClick={() => 
