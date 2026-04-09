@@ -76,7 +76,7 @@ export function CommentSection(props: {
                         </Field>
                         )}
                     />
-                    <Button type="submit" disabled={isPending}>
+                    <Button type="submit" disabled={isPending} className="mb-6">
                         {isPending ? (
                             <>
                                 <Loader2 className="size-4 animate-spin" />
@@ -86,8 +86,8 @@ export function CommentSection(props: {
                             )}
                     </Button>
                 </form>
-                {data?.length > 0 && <Separator />}
-                <section className="space-y-6">
+                {data?.length > 0 && <Separator/>}
+                <section className="space-y-6 mt-6">
                     {data?.map((comment) => (
                         <div key={comment._id} className="flex gap-4">
                             <Avatar className="size-10 shrink-0">

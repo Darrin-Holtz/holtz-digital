@@ -3,13 +3,16 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { fetchQuery } from "convex/nextjs";
+import { cacheTag } from "next/cache";
+import { cacheLife } from "next/cache";
 import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
 import Image from "next/image";
 import Link from "next/link";
+import { connection } from "next/server";
 import { Suspense } from "react";
 
-export const dynamic = "force-static";
-export const revalidate = 30;
+{ /*export const dynamic = "force-static";
+export const revalidate = 30; */ }
 
 export const metadata: Metadata = {
   title: "Blog | Darrin Holtz",
@@ -37,7 +40,9 @@ export default function BlogPage() {
 }
 
 async function LoadBlogList() {
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  "use cache";
+  cacheLife("hours");
+  cacheTag("blog");
   const data = await fetchQuery(api.posts.getPosts);
 
   return (
@@ -48,7 +53,9 @@ async function LoadBlogList() {
             <Image
               src={post.imageUrl ?? "https://images.unsplash.com/photo-1773754532196-014342510e64?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8"}
               alt="image"
+              loading="eager"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="rounded-t-lg object-cover"
             />
           </div>

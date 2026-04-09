@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
   },
 
   turbopack: {},
-
+  cacheComponents: true,
   images: {
     remotePatterns: [
       {

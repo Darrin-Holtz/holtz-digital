@@ -10,6 +10,7 @@ import { ArrowLeft } from "lucide-react";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 interface PostIdRouteProps {
     params: {
@@ -59,7 +60,7 @@ export default async function PostIdRoute({ params }: PostIdRouteProps){
                 Back to Blog
             </Link>
             <div className="relative w-full h-[400px] mb-8 rounded-xl overflow-hidden shadow-sm">
-                <Image src={post.imageUrl ?? "/default-image.jpg"} alt={post.title} fill className="object-cover hover:scale-105 transition-transform duration-500"/>
+                <Image src={post.imageUrl ?? "/default-image.jpg"} alt={post.title} fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover hover:scale-105 transition-transform duration-500"/>
             </div>
             <div className="space-y-4 flex flex-col">
                 <h1 className="text-4xl font-bold tracking-tight text-foreground">{post.title}</h1>
