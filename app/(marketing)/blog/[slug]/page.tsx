@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: `${post.title} | Darrin Holtz`,
-    description: post.body.slice(0, 160),
+    description: post.body?.slice(0, 160) ?? "",
     category: "Web development",
     authors: [{ name: "Darrin Holtz" }],
   };
@@ -77,7 +77,7 @@ export default async function PostSlugRoute({ params }: PageProps) {
 
       <div className="relative w-full h-[400px] mb-8 rounded-xl overflow-hidden shadow-sm">
         <Image
-          src={post.imageUrl ?? "/default-image.jpg"}
+          src={imageSrc}
           alt={post.title}
           loading="eager"
           fill

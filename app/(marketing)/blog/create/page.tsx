@@ -1,6 +1,7 @@
 'use client';
 
-import { createBlogAction } from "@/app/actions";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import { postSchema } from "@/app/schemas/blog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import z from "zod";
+import { toast } from "sonner";
 
 // ✅ Infer type directly from schema
 type FormValues = z.infer<typeof postSchema>;
@@ -20,6 +22,8 @@ type FormValues = z.infer<typeof postSchema>;
 export default function CreateRoute() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const createPost = useMutation(api.posts.createPost);
+  const generateUploadUrl = useMutation(api.posts.generateImageUploadUrl);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(postSchema),
@@ -33,9 +37,41 @@ export default function CreateRoute() {
   // ✅ Correct typing
   const onSubmit: SubmitHandler<FormValues> = (values) => {
     startTransition(async () => {
-      console.log("Submitting:", values);
-      await createBlogAction(values);
-      router.push("/blog"); // optional redirect
+      try {
+        let imageStorageId = undefined;
+
+        // ✅ Step 1: upload image (if exists)
+        if (values.image) {
+          const uploadUrl = await generateUploadUrl();
+
+          const result = await fetch(uploadUrl, {
+            method: "POST",
+            headers: { "Content-Type": values.image.type },
+            body: values.image,
+          });
+
+          if (!result.ok) {
+            throw new Error("Image upload failed");
+          }
+
+          const { storageId } = await result.json();
+          imageStorageId = storageId;
+        }
+
+        // ✅ Step 2: create post in Convex
+        await createPost({
+          title: values.title,
+          body: values.content, // ⚠️ note: body not content
+          imageStorageId,
+        });
+
+        form.reset();
+        router.push("/blog");
+        toast.success("Post created!");
+
+      } catch (err) {
+        console.error(err);
+      }
     });
   };
 
@@ -124,7 +160,7 @@ export default function CreateRoute() {
               />
 
               {/* Submit */}
-              <Button disabled={isPending}>
+              <Button disabled={isPending || !form.formState.isValid}>
                 {isPending ? (
                   <>
                     <Loader2 className="animate-spin size-4" />
