@@ -6,8 +6,9 @@ export default defineSchema({
         title: v.string(),
         body: v.string(),
         authorId: v.string(),
+        slug: v.string(),
         imageStorageId: v.optional(v.id("_storage")),
-    })
+    }).index("by_slug", ["slug"])
         .searchIndex("search_title", {
             searchField: "title",
         })

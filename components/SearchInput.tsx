@@ -45,7 +45,7 @@ export function SearchInput() {
                     ): (
                        <div className="py-1">
                         {results.map((post) => (
-                            <Link className="flex flex-col px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground cursor-pointer" href={`/blog/${post._id}`} key={post._id} onClick={() => { setOpen(false); setTerm(""); }}>
+                            <Link className="flex flex-col px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground cursor-pointer" href={`/blog/${post.slug}`} key={post._id} onClick={() => { setOpen(false); setTerm(""); }}>
                                 <p className="font-medium truncate">{post.title}</p>
                                 <p className="text-xs text-muted-foreground pt-1">
                                     {post.body.substring(0, 60)}

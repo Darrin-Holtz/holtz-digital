@@ -8,7 +8,6 @@ import { cacheLife } from "next/cache";
 import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
 import Image from "next/image";
 import Link from "next/link";
-import { connection } from "next/server";
 import { Suspense } from "react";
 
 { /*export const dynamic = "force-static";
@@ -16,7 +15,7 @@ export const revalidate = 30; */ }
 
 export const metadata: Metadata = {
   title: "Blog | Darrin Holtz",
-  description: "Read our latest articles and insights.",
+  description: "Read our latest articles d insights.",
   category: "Web development",
   authors: [{ name: "Darrin Holtz" }],
 };
@@ -61,7 +60,10 @@ async function LoadBlogList() {
           </div>
 
           <CardContent>
-            <Link href={`/blog/${post._id}`}>
+            <div className="text-red-500 text-sm">
+              SLUG: {post.slug}
+            </div>
+            <Link href={`/blog/${post.slug}`}>
               <h1 className="text-2xl font-bold hover:text-primary">
                 {post.title}
               </h1>
@@ -73,7 +75,7 @@ async function LoadBlogList() {
               className={buttonVariants({
                 className: "w-full",
               })}
-              href={`/blog/${post._id}`}
+              href={`/blog/${post.slug}`}
             >
               Read more
             </Link>

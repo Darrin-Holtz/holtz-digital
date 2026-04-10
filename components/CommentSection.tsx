@@ -19,34 +19,33 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Separator } from "./ui/separator";
 
 export function CommentSection(props: {
+    postId: Id<"posts">;
     preloadedComments: Preloaded<typeof api.comments.getCommentsByPostId>
 }) {
-    const [isPending, startTransition] = useTransition();
-    const params = useParams<{ postId: string }>();
-    const data = usePreloadedQuery(props.preloadedComments);
-    const postId = params.postId as Id<"posts">;
+    const [isPending, startTransition] = useTransition();    
+    const data = usePreloadedQuery(props.preloadedComments);    
     const createComment = useMutation(api.comments.createComment);
     const form = useForm({
     resolver: zodResolver(commentSchema),
         defaultValues: {
-            postId,
+            postId: props.postId,
             body: "",
         }
     });
 
     async function onSubmit(data: z.infer<typeof commentSchema>) {
-        startTransition(async () => {
-            try {
-                await createComment({
-                    ...data,
-                    postId: data.postId as Id<"posts">,
-                });
-                form.reset();
-                toast.success("Comment created successfully!");
-            } catch {
-                toast.error("Failed to create comment. Please try again.");
-            }
-        });
+        try {
+            await createComment({
+            postId: props.postId,
+            body: data.body,
+            });
+
+            form.reset();
+            toast.success("Comment created successfully!");
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to create comment");
+        }
     }
     if (data === undefined) {
         return <p>loading...</p>;

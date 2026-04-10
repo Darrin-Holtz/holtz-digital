@@ -2,6 +2,7 @@ import { mutation, query } from "./_generated/server";
 import { ConvexError, v } from "convex/values";
 import { authComponent } from "./auth";
 import { Doc } from "./_generated/dataModel";
+import { slugify } from "../lib/utils";
 
 // Create a new post with the given title and body
 export const createPost = mutation({
@@ -11,10 +12,14 @@ export const createPost = mutation({
     if (!user) {
       throw new ConvexError("Unauthorized");
     }
+
+    const slug = slugify(args.title);
+
     const blogArticle = await ctx.db.insert("posts", { 
         body: args.body,
         title: args.title,
         authorId: user._id,
+        slug,
         imageStorageId: args.imageStorageId,
     });
     return blogArticle;
@@ -39,6 +44,29 @@ export const getPosts = query({
     );
   }
 })
+
+export const getPostBySlug = query({
+  args: { slug: v.string() },
+  handler: async (ctx, { slug }) => {
+    const post = await ctx.db
+      .query("posts")
+      .withIndex("by_slug", (q) => q.eq("slug", slug))
+      .unique();
+
+    if (!post) return null;
+
+    let imageUrl: string | null = null;
+
+    if (post.imageStorageId) {
+      imageUrl = await ctx.storage.getUrl(post.imageStorageId);
+    }
+
+    return {
+      ...post,
+      imageUrl,
+    };
+  },
+});
 
 export const generateImageUploadUrl = mutation({
   args: {},
@@ -80,6 +108,7 @@ interface searchResultTypes {
   _id: string;
   title: string;
   body: string;
+  slug?: string;
 }
 
 export const searchPosts = query({
@@ -99,6 +128,7 @@ export const searchPosts = query({
           _id: doc._id,
           title: doc.title,
           body: doc.body,
+          slug: doc.slug,
         });
         if (results.length >= limit) break
       }
@@ -110,14 +140,19 @@ export const searchPosts = query({
 
     await pushDocs(titleMatches);
 
-    if (results.length < limit){
-      const bodyMatches = await ctx.db
-        .query("posts")
-        .withSearchIndex("search_body", (q) => q.search("body", args.term))
-        .take(limit);
-
-      await pushDocs(bodyMatches);
+    if (results.length >= limit) {
+      return results;
     }
+
+    const remaining = limit - results.length;
+
+    const bodyMatches = await ctx.db
+      .query("posts")
+      .withSearchIndex("search_body", (q) => q.search("body", args.term))
+      .take(remaining);
+
+    await pushDocs(bodyMatches);
+
     return results;
   },
 });
