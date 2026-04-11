@@ -61,7 +61,6 @@ async function LoadBlogList() {
 
           <CardContent>
             <div className="text-red-500 text-sm">
-              SLUG: {post.slug}
             </div>
             <Link href={`/blog/${post.slug}`}>
               <h1 className="text-2xl font-bold hover:text-primary">

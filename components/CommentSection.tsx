@@ -27,7 +27,7 @@ export function CommentSection(props: {
 postId: Id<"posts">;
 preloadedComments: Preloaded<typeof api.comments.getCommentsByPostId>;
 }) {
-const [isPending] = useTransition();
+const [isPending, startTransition] = useTransition();
 const data = usePreloadedQuery(props.preloadedComments);
 const createComment = useMutation(api.comments.createComment);
 const { isAuthenticated, isLoading } = useConvexAuth();
@@ -47,19 +47,20 @@ body: "",
 });
 
 async function onSubmit(data: z.infer<typeof commentSchema>) {
-try {
-await createComment({
-postId: props.postId,
-body: data.body,
-});
+    startTransition(async () => {
+        try {
+        await createComment({
+        postId: props.postId,
+        body: data.body,
+        });
 
-  form.reset();
-  toast.success("Comment created successfully!");
-} catch (err) {
-  console.error(err);
-  toast.error("You must be logged in to comment.");
-}
-
+        form.reset();
+        toast.success("Comment created successfully!");
+        } catch (err) {
+        console.error(err);
+        toast.error("You must be logged in to comment.");
+        }
+    });
 }
 
 if (data === undefined) {
@@ -81,7 +82,7 @@ return (
         </CardHeader>
         <CardContent>
             {/* COMMENT INPUT */}
-            {isAuthenticated ? (
+            {isLoading ? null : isAuthenticated ? (
             <form
                 className="space-y-4"
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -118,9 +119,9 @@ return (
             ) : (
             <div className="mb-6 border rounded-lg p-4 text-center">
                 <p className="text-muted-foreground mb-3">
-                You must be signed in to leave a comment.
+                Join the discussion to leave a comment.
                 </p>
-                <Link href="/auth/login">
+                <Link href={`/auth/login?redirect=${encodeURIComponent(window.location.pathname)}`}>
                 <Button>Login to Comment</Button>
                 </Link>
             </div>
