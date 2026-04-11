@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -127,4 +128,55 @@
   html {
     @apply font-sans;
   }
+}
+
+/* Tiptap image resize handles */
+[data-resize-wrapper] {
+  overflow: visible;
+}
+
+[data-resize-handle] {
+  width: 12px;
+  height: 12px;
+  border: 2px solid oklch(1 0 0);
+  background: oklch(0.556 0 0);
+  border-radius: 9999px;
+  z-index: 20;
+}
+
+[data-resize-handle="top-left"] {
+  transform: translate(-50%, -50%);
+  cursor: nwse-resize;
+}
+
+[data-resize-handle="top-right"] {
+  transform: translate(50%, -50%);
+  cursor: nesw-resize;
+}
+
+[data-resize-handle="bottom-left"] {
+  transform: translate(-50%, 50%);
+  cursor: nesw-resize;
+}
+
+[data-resize-handle="bottom-right"] {
+  transform: translate(50%, 50%);
+  cursor: nwse-resize;
+}
+
+[data-resize-container][data-node="image"] {
+  width: 100%;
+  display: flex;
+}
+
+[data-resize-container][data-node="image"]:has(img[data-align="left"]) {
+  justify-content: flex-start;
+}
+
+[data-resize-container][data-node="image"]:has(img[data-align="center"]) {
+  justify-content: center;
+}
+
+[data-resize-container][data-node="image"]:has(img[data-align="right"]) {
+  justify-content: flex-end;
 }

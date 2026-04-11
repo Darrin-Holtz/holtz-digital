@@ -37,8 +37,8 @@ export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // ✅ Get redirect param (fallback to dashboard)
-  const redirect = searchParams.get("redirect") || "/dashboard";
+  // Use redirect only when explicitly provided in the URL.
+  const redirectTarget = searchParams.get("redirect");
 
   // --- FORM ---
   const form = useForm<FormValues>({
@@ -68,7 +68,7 @@ export default function LoginPage() {
         onSuccess: () => {
           form.reset();
           toast.success("Successfully signed in.");
-          router.push(redirect); // ✅ Respect redirect
+          router.push(redirectTarget ?? "/dashboard");
         },
         onError: (error) => {
           toast.error(error.error.message);
@@ -83,9 +83,9 @@ export default function LoginPage() {
     if (profile === undefined) return;
     if (!profile) return;
 
-    // ✅ If redirect exists, use it FIRST
-    if (redirect) {
-      router.replace(redirect);
+    // If redirect exists, use it first.
+    if (redirectTarget) {
+      router.replace(redirectTarget);
       return;
     }
 
@@ -95,7 +95,7 @@ export default function LoginPage() {
     } else {
       router.replace("/");
     }
-  }, [user, profile, router, redirect]);
+  }, [user, profile, router, redirectTarget]);
 
   const isSubmitting = form.formState.isSubmitting;
 

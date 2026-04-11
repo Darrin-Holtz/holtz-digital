@@ -8,12 +8,15 @@ export async function proxy(request: NextRequest) {
     // This is the recommended approach to optimistically redirect users
     // We recommend handling auth checks in each page/route
 	if (!sessionCookie) {
-		return NextResponse.redirect(new URL("/auth/login", request.url));
+		const loginUrl = new URL("/auth/login", request.url);
+		const redirectPath = `${request.nextUrl.pathname}${request.nextUrl.search}`;
+		loginUrl.searchParams.set("redirect", redirectPath);
+		return NextResponse.redirect(loginUrl);
 	}
 
 	return NextResponse.next();
 }
 
 export const config = {
-	matcher: ["/blog/create", "/dashboard/:path*"], // Specify the routes the middleware applies to
+	matcher: ["/dashboard/:path*"], // Specify the routes the middleware applies to
 };

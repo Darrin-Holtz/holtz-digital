@@ -5,7 +5,7 @@ import { api } from "@/convex/_generated/api";
 import { fetchQuery } from "convex/nextjs";
 import { cacheTag } from "next/cache";
 import { cacheLife } from "next/cache";
-import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -38,6 +38,12 @@ export default function BlogPage() {
   );
 }
 
+function toTextExcerpt(html: string, maxLength = 140) {
+  const text = html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength).trim()}...`;
+}
+
 async function LoadBlogList() {
   "use cache";
   cacheLife("hours");
@@ -67,7 +73,7 @@ async function LoadBlogList() {
                 {post.title}
               </h1>
             </Link>
-            <p className="text-muted-foreground line-clamp-3">{post.body}</p>
+            <p className="text-muted-foreground line-clamp-3">{toTextExcerpt(post.body)}</p>
           </CardContent>
           <CardFooter>
             <Link

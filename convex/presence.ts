@@ -27,6 +27,11 @@ export const list = query({
 
     return await Promise.all(
       entries.map(async (entry) => {
+        // Skip hydration for invalid/empty userIds
+        if (!entry.userId || entry.userId.trim() === "") {
+          return entry;
+        }
+
         const user = await authComponent.getAnyUserById(ctx, entry.userId);
         
         if (!user) {

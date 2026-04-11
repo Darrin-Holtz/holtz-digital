@@ -1,12 +1,13 @@
 import { mutation, query } from "./_generated/server";
 import { ConvexError, v } from "convex/values";
 import { authComponent } from "./auth";
-import { Doc } from "./_generated/dataModel";
+import { Doc, Id } from "./_generated/dataModel";
+import { internal } from "./_generated/api";
 import { slugify } from "../lib/utils";
 
 // Create a new post with the given title and body
 export const createPost = mutation({
-  args: { title: v.string(), body: v.string(), imageStorageId: v.id("_storage") },
+  args: { title: v.string(), body: v.string(), imageStorageId: v.optional(v.id("_storage")) },
   handler: async (ctx, args) => {
     const user = await authComponent.safeGetAuthUser(ctx);
     if (!user) {
@@ -22,6 +23,11 @@ export const createPost = mutation({
         slug,
         imageStorageId: args.imageStorageId,
     });
+
+    await ctx.runMutation(internal.stats.bumpCounts, {
+      postsDelta: 1,
+    });
+
     return blogArticle;
   },
 });
@@ -78,6 +84,99 @@ export const generateImageUploadUrl = mutation({
     }
 
     return await ctx.storage.generateUploadUrl();
+  },
+});
+
+export const getStorageUrl = query({
+  args: { storageId: v.id("_storage") },
+  handler: async (ctx, args) => {
+    return await ctx.storage.getUrl(args.storageId);
+  },
+});
+
+export const updatePost = mutation({
+  args: {
+    postId: v.id("posts"),
+    title: v.string(),
+    body: v.string(),
+    imageStorageId: v.optional(v.id("_storage")),
+  },
+  handler: async (ctx, args) => {
+    const user = await authComponent.safeGetAuthUser(ctx);
+    if (!user) {
+      throw new ConvexError("Unauthorized");
+    }
+
+    const existingPost = await ctx.db.get(args.postId);
+    if (!existingPost) {
+      throw new ConvexError("Post not found");
+    }
+
+    const patch: {
+      title: string;
+      body: string;
+      slug: string;
+      imageStorageId?: Id<"_storage">;
+    } = {
+      title: args.title,
+      body: args.body,
+      slug: slugify(args.title),
+    };
+
+    if (args.imageStorageId) {
+      patch.imageStorageId = args.imageStorageId;
+    }
+
+    await ctx.db.patch(args.postId, patch);
+
+    return args.postId;
+  },
+});
+
+export const deletePost = mutation({
+  args: {
+    postId: v.id("posts"),
+  },
+  handler: async (ctx, args) => {
+    const user = await authComponent.safeGetAuthUser(ctx);
+    if (!user) {
+      throw new ConvexError("Unauthorized");
+    }
+
+    const existingPost = await ctx.db.get(args.postId);
+    if (!existingPost) {
+      throw new ConvexError("Post not found");
+    }
+
+    // Collect all storage IDs to delete (featured image + inline body images)
+    const storageIdsToDelete: Id<"_storage">[] = [];
+
+    if (existingPost.imageStorageId) {
+      storageIdsToDelete.push(existingPost.imageStorageId);
+    }
+
+    // Extract inline image storage IDs from body HTML
+    const storageUrlPattern = /\/api\/storage\/([a-f0-9-]+)/g;
+    let match;
+    while ((match = storageUrlPattern.exec(existingPost.body)) !== null) {
+      const id = match[1] as Id<"_storage">;
+      if (!storageIdsToDelete.includes(id)) {
+        storageIdsToDelete.push(id);
+      }
+    }
+
+    await ctx.db.delete(args.postId);
+
+    // Delete all associated storage files
+    await Promise.all(
+      storageIdsToDelete.map((id) => ctx.storage.delete(id)),
+    );
+
+    await ctx.runMutation(internal.stats.bumpCounts, {
+      postsDelta: -1,
+    });
+
+    return args.postId;
   },
 });
 

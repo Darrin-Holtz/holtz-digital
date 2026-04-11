@@ -62,9 +62,23 @@ export default async function PostSlugRoute({ params }: PageProps) {
 
       <h1 className="text-4xl font-bold">{post.title}</h1>
 
+      <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm text-muted-foreground">
+          Posted on: {new Date(post._creationTime).toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })}
+        </p>
+        <PostPresence roomId={post._id} />
+      </div>
+
       <Separator className="my-8" />
 
-      <p className="whitespace-pre-wrap">{post.body}</p>
+      <div
+        className="prose dark:prose-invert max-w-none"
+        dangerouslySetInnerHTML={{ __html: post.body }}
+      />
 
       <Separator className="my-8" />
 

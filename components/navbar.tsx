@@ -3,17 +3,19 @@
 import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
 import { ThemeToggle } from "./theme-toggle";
-import { useConvexAuth } from "convex/react";
+import { useConvexAuth, useQuery } from "convex/react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { usePathname, useRouter } from "next/navigation";
 import { SearchInput } from "./SearchInput";
-import { PathnameContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
+import { api } from "@/convex/_generated/api";
 
 export function Navbar() {
     const { isAuthenticated, isLoading } = useConvexAuth();
+    const profile = useQuery(api.profiles.getCurrentProfile);
     const router = useRouter();
     const pathname = usePathname();
+
     return(
         <nav className="w-full py-5 flex items-center justify-between">
             <div className="flex items-center gap-8">
@@ -24,6 +26,9 @@ export function Navbar() {
                 </Link>
                 <div className="flex items-center gap-2">                    
                     <Link className={buttonVariants({ variant: "ghost" })} href="/blog">Blog</Link>
+                    {!isLoading && isAuthenticated && profile?.role === "admin" && (
+                        <Link className={buttonVariants({ variant: "ghost" })} href="/dashboard">Dashboard</Link>
+                    )}
                 </div>                
             </div>
             <div className="flex items-center gap-2">

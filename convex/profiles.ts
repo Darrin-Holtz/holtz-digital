@@ -1,5 +1,6 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
+import { internal } from "./_generated/api";
 
 /**
  * GET PROFILE
@@ -39,10 +40,16 @@ export const createProfile = mutation({
 
     if (existing) return existing;
 
-    return await ctx.db.insert("profiles", {
+    const profileId = await ctx.db.insert("profiles", {
       userId: identity.subject,
       role: "user", // ✅ ALWAYS default to user
     });
+
+    await ctx.runMutation(internal.stats.bumpCounts, {
+      usersDelta: 1,
+    });
+
+    return profileId;
   },
 });
 

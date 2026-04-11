@@ -19,10 +19,17 @@ export default defineSchema({
         postId: v.id("posts"),
         authorId: v.string(),
         authorName: v.string(),
+        authorImage: v.optional(v.string()),
         body: v.string(),
-    }),
+    }).index("by_postId", ["postId"]),
     profiles: defineTable({
         userId: v.string(), // from better-auth
         role: v.string(),   // "admin" | "user"
     }).index("by_user", ["userId"]),
+    stats: defineTable({
+        key: v.string(),
+        postsCount: v.number(),
+        usersCount: v.number(),
+        commentsCount: v.number(),
+    }).index("by_key", ["key"]),
 })

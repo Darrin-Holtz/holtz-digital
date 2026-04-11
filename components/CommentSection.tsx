@@ -23,6 +23,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Separator } from "./ui/separator";
 import Link from "next/link";
 
+function getInitials(name?: string) {
+const parts = (name ?? "").trim().split(/\s+/).filter(Boolean);
+
+if (parts.length === 0) return "U";
+if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+
+return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+}
+
 export function CommentSection(props: {
 postId: Id<"posts">;
 preloadedComments: Preloaded<typeof api.comments.getCommentsByPostId>;
@@ -135,15 +144,11 @@ return (
                 <div key={comment._id} className="flex gap-4">
                 <Avatar className="size-10 shrink-0">
                     <AvatarImage
-                    src={`https://avatar.vercel.sh/${encodeURIComponent(
-                        comment.authorName
-                    )}`}
+                    src={comment.authorImage ?? undefined}
                     alt={comment.authorName}
                     />
                     <AvatarFallback>
-                    {comment.authorName
-                        ?.slice(0, 2)
-                        .toUpperCase() ?? "U"}
+                    {getInitials(comment.authorName)}
                     </AvatarFallback>
                 </Avatar>
 

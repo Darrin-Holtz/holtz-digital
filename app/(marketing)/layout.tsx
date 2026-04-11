@@ -1,12 +1,16 @@
-'use client';
-
 import { Navbar } from "@/components/navbar";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
+
+function NavbarFallback() {
+    return <div className="w-full h-[76px]" aria-hidden="true" />;
+}
 
 export default function SharedLayout({ children }: { children: ReactNode }) {
     return(
         <>
-            <Navbar />
+            <Suspense fallback={<NavbarFallback />}>
+                <Navbar />
+            </Suspense>
             {children}
         </>
     )

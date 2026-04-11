@@ -1,8 +1,22 @@
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import { api } from "@/convex/_generated/api";
 import { convexAuth } from "@/lib/auth-server";
+import { AdminNavbar } from "@/components/admin/admin-navbar";
 
 export default async function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <Suspense fallback={null}>
+      <AdminLayoutContent>{children}</AdminLayoutContent>
+    </Suspense>
+  );
+}
+
+async function AdminLayoutContent({
   children,
 }: {
   children: React.ReactNode;
@@ -19,5 +33,10 @@ export default async function AdminLayout({
     redirect("/blog");
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      <AdminNavbar />
+      {children}
+    </>
+  );
 }
