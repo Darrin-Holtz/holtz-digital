@@ -21,4 +21,8 @@ export default defineSchema({
         authorName: v.string(),
         body: v.string(),
     }),
+    profiles: defineTable({
+        userId: v.string(), // from better-auth
+        role: v.string(),   // "admin" | "user"
+    }).index("by_user", ["userId"]),
 })

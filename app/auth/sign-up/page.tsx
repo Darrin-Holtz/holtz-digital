@@ -1,5 +1,6 @@
-"use client";
+'use client';
 
+import { useEffect } from "react";
 import { signUpSchema } from "@/app/schemas/auth";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +24,9 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+
 type FormValues = {
   name: string;
   email: string;
@@ -31,6 +35,7 @@ type FormValues = {
 
 export default function SignUpPage() {
   const router = useRouter();
+
   const form = useForm<FormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -40,24 +45,45 @@ export default function SignUpPage() {
     },
   });
 
-  async function onSubmit(data: z.infer<typeof signUpSchema>) {
-    console.log("Submitting signup for:", data.email);
+  // --- AUTH STATE ---
+  const session = authClient.useSession();
+  const user = session.data?.user;
 
-    const result = await authClient.signUp.email({
+  // --- PROFILE ---
+  const profile = useQuery(
+    api.profiles.getByUserId,
+    user?.id ? { userId: user.id } : "skip"
+  );
+
+  // --- SIGN UP ---
+  async function onSubmit(data: z.infer<typeof signUpSchema>) {
+    await authClient.signUp.email({
       email: data.email,
       password: data.password,
       name: data.name,
       fetchOptions: {
-            onSuccess: () => {
-                toast.success("Successfully signed in.");
-                router.push("/")
-           },
-            onError: (error) => {
-                toast.error(error.error.message);
-            } 
-        }
-    });    
+        onSuccess: () => {
+          toast.success("Account created successfully.");
+        },
+        onError: (error) => {
+          toast.error(error.error.message);
+        },
+      },
+    });
   }
+
+  // --- ROLE-BASED REDIRECT (same logic as login) ---
+  useEffect(() => {
+    if (!user) return;
+    if (profile === undefined) return;
+    if (!profile) return;
+
+    if (profile.role === "admin") {
+      router.replace("/dashboard");
+    } else {
+      router.replace("/");
+    }
+  }, [user, profile, router]);
 
   const isSubmitting = form.formState.isSubmitting;
 
@@ -69,6 +95,7 @@ export default function SignUpPage() {
           Create an account to get started.
         </CardDescription>
       </CardHeader>
+
       <CardContent>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup className="gap-y-4">
@@ -115,9 +142,9 @@ export default function SignUpPage() {
                 <Field>
                   <FieldLabel>Password</FieldLabel>
                   <Input
+                    type="password"
                     aria-invalid={fieldState.invalid}
                     placeholder="••••••••"
-                    type="password"
                     {...field}
                   />
                   {fieldState.invalid && (
