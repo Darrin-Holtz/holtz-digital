@@ -3,15 +3,12 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { fetchQuery } from "convex/nextjs";
-import { cacheTag } from "next/cache";
-import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 
-{ /*export const dynamic = "force-static";
-export const revalidate = 30; */ }
+export const revalidate = 30;
 
 export const metadata: Metadata = {
   title: "Blog | Darrin Holtz",
@@ -45,9 +42,6 @@ function toTextExcerpt(html: string, maxLength = 140) {
 }
 
 async function LoadBlogList() {
-  "use cache";
-  cacheLife("hours");
-  cacheTag("blog");
   const data = await fetchQuery(api.posts.getPosts);
 
   return (

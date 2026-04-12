@@ -10,6 +10,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 
+export const revalidate = 30;
+
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
