@@ -3,29 +3,127 @@ import HomeAuthenticSection from "@/components/HomeAuthenticSection";
 import HomeServicesSection from "@/components/HomeServicesSection";
 import HomeFaqSection from "@/components/HomeFaqSection";
 import HomeContactSection from "@/components/HomeContactSection";
-import SiteFooter from "@/components/SiteFooter";
 import { unstable_noStore as noStore } from "next/cache";
+import type { Metadata } from "next";
 import { connection } from "next/server";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const localBusinessSchema = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Holtz Digital",
-  "description": "Holtz Digital offers web design, local SEO, e-commerce, and website maintenance services to businesses in the Buffalo, NY and Western New York area.",
-  "url": "https://holtzdigital.com",
-  "telephone": "",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Buffalo",
-    "addressRegion": "NY",
-    "addressCountry": "US"
+export const metadata: Metadata = {
+  title: "Buffalo Web Design for Local Businesses",
+  description:
+    "Holtz Digital builds fast, custom websites for Buffalo businesses with clear messaging, strong local search fundamentals, and modern performance.",
+  alternates: {
+    canonical: "/",
   },
-  "areaServed": "Western New York",
-  "sameAs": [],
-  "priceRange": "$$"
+  openGraph: {
+    title: "Buffalo Web Design for Local Businesses",
+    description:
+      "Fast, custom websites for Buffalo businesses with clear messaging and local search fundamentals.",
+    url: "https://holtzdigital.com",
+  },
+  twitter: {
+    title: "Buffalo Web Design for Local Businesses",
+    description:
+      "Fast, custom websites for Buffalo businesses that want clearer positioning and better conversion paths.",
+  },
+};
+
+const homepageSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://holtzdigital.com/#organization",
+      name: "Holtz Digital",
+      description:
+        "Holtz Digital offers web design, local SEO foundations, website optimization, and maintenance for businesses in Buffalo, NY and Western New York.",
+      url: "https://holtzdigital.com",
+      areaServed: ["Buffalo, NY", "Western New York"],
+      priceRange: "$$",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Buffalo",
+        addressRegion: "NY",
+        addressCountry: "US",
+      },
+      sameAs: ["https://github.com/Darrin-Holtz"],
+      serviceType: [
+        "Website Design",
+        "Website Redesign",
+        "Local SEO Foundations",
+        "Website Maintenance",
+        "Performance Optimization",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://holtzdigital.com/#website",
+      url: "https://holtzdigital.com",
+      name: "Holtz Digital",
+      description:
+        "Buffalo web design and local SEO services for businesses that want clearer positioning and stronger lead flow.",
+      inLanguage: "en-US",
+      publisher: {
+        "@id": "https://holtzdigital.com/#organization",
+      },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://holtzdigital.com/#faq",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "How long does a typical website project take?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Most brochure-style websites take about 2 to 4 weeks depending on scope, content readiness, and revision rounds.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do you offer SEO with web design?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. Every build includes technical and on-page SEO foundations like clean structure, heading hierarchy, metadata-ready pages, and performance optimization.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you redesign my existing site instead of building from scratch?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Absolutely. I can modernize your current site, improve speed and UX, and keep what is working while removing friction points.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Will my site be easy to update after launch?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. I build with maintainability in mind so you can update content and basic sections without fighting your codebase.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do you provide ongoing support after launch?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. I offer ongoing updates, maintenance, and optimization support so your website stays healthy as your business grows.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How do I get started?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Start with a quick discovery call. I will define your goals, target audience, and the pages you need, then map out a clear build plan.",
+          },
+        },
+      ],
+    },
+  ],
 };
 
 export default async function Home() {
@@ -36,14 +134,13 @@ export default async function Home() {
     <div>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageSchema) }}
       />
       <HeroSection />
       <HomeAuthenticSection />
       <HomeServicesSection />
       <HomeFaqSection />
       <HomeContactSection />
-      <SiteFooter />
     </div>
   );
 }

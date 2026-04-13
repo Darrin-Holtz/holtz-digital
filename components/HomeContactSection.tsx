@@ -1,12 +1,19 @@
 "use client";
 
 import { type FormEvent, useState } from "react";
-import { Send, Sparkles } from "lucide-react";
+import { ChevronDown, Send, Sparkles } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 
 const PROJECT_TYPES = [
@@ -25,6 +32,43 @@ const BUDGET_RANGES = [
   "$10,000+",
   "Need guidance",
 ];
+
+type ContactSelectProps = {
+  id: string;
+  name: string;
+  value: string;
+  options: readonly string[];
+  onValueChange: (value: string) => void;
+};
+
+function ContactSelect({ id, name, value, options, onValueChange }: ContactSelectProps) {
+  return (
+    <DropdownMenu>
+      <input type="hidden" name={name} value={value} />
+      <DropdownMenuTrigger asChild>
+        <button
+          id={id}
+          type="button"
+          className="h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-left text-base transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-input/50 disabled:opacity-50 md:text-sm dark:bg-input/30 dark:disabled:bg-input/80"
+        >
+          <span className="flex items-center justify-between gap-2 text-foreground">
+            <span className="truncate">{value}</span>
+            <ChevronDown className="size-4 shrink-0 text-muted-foreground" />
+          </span>
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="bg-card/95 text-foreground backdrop-blur dark:bg-input/95">
+        <DropdownMenuRadioGroup value={value} onValueChange={onValueChange}>
+          {options.map((option) => (
+            <DropdownMenuRadioItem key={option} value={option} className="text-foreground">
+              {option}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
 
 export default function HomeContactSection() {
   const [name, setName] = useState("");
@@ -59,7 +103,7 @@ export default function HomeContactSection() {
         <div className="absolute right-0 bottom-0 h-52 w-52 rounded-full bg-sky-500/10 blur-3xl" />
       </div>
 
-      <div className="mx-auto max-w-6xl">
+      <div className="w-full">
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-4 py-2 text-xs font-semibold tracking-wider text-primary uppercase backdrop-blur">
             <Sparkles className="size-3.5" />
@@ -73,7 +117,7 @@ export default function HomeContactSection() {
           </p>
         </div>
 
-        <Card className="mx-auto mt-12 max-w-4xl border-border/70 bg-card/85 shadow-sm backdrop-blur">
+        <Card className="mt-12 w-full border-border/70 bg-card/85 shadow-sm backdrop-blur">
           <CardHeader>
             <CardTitle>Start your project inquiry</CardTitle>
           </CardHeader>
@@ -108,35 +152,23 @@ export default function HomeContactSection() {
               <div className="grid gap-5 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="projectType">Project Type</Label>
-                  <select
+                  <ContactSelect
                     id="projectType"
                     name="projectType"
                     value={projectType}
-                    onChange={(e) => setProjectType(e.target.value)}
-                    className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
-                  >
-                    {PROJECT_TYPES.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
+                    options={PROJECT_TYPES}
+                    onValueChange={setProjectType}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="budget">Budget</Label>
-                  <select
+                  <ContactSelect
                     id="budget"
                     name="budget"
                     value={budget}
-                    onChange={(e) => setBudget(e.target.value)}
-                    className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
-                  >
-                    {BUDGET_RANGES.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
+                    options={BUDGET_RANGES}
+                    onValueChange={setBudget}
+                  />
                 </div>
               </div>
 

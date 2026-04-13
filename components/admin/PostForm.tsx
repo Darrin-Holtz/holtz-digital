@@ -117,7 +117,7 @@ export default function PostForm({
               <FieldLabel>Title</FieldLabel>
               <Input
                 {...field}
-                placeholder="Super exciting title"
+                placeholder="Specific title with a clear promise"
                 aria-invalid={fieldState.invalid}
               />
               {fieldState.error && <FieldError errors={[fieldState.error]} />}
@@ -135,7 +135,7 @@ export default function PostForm({
                 key={editorResetKey}
                 value={field.value ?? ""}
                 onChange={field.onChange}
-                placeholder="Your blog content here"
+                placeholder="Share firsthand insights, concrete examples, and practical takeaways"
                 invalid={fieldState.invalid}
               />
               {fieldState.error && <FieldError errors={[fieldState.error]} />}

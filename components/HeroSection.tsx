@@ -13,7 +13,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,oklch(0.72_0_0/.06)_1px,transparent_1px),linear-gradient(to_bottom,oklch(0.72_0_0/.06)_1px,transparent_1px)] bg-[size:44px_44px]" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 pb-8 sm:pb-10 lg:px-8">
+      <div className="w-full pb-8 sm:pb-10">
         <div className="mx-auto max-w-4xl text-center">
           <p className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-4 py-2 text-xs font-semibold tracking-wider text-primary uppercase backdrop-blur">
             <Sparkles className="size-3.5" />
@@ -25,12 +25,12 @@ export default function Hero() {
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-muted-foreground">
-            We design and build fast, SEO-ready websites for local businesses and startups in Buffalo, NY. Clean design, clear messaging, and conversion-focused pages that help you turn traffic into customers.
+            I design and build fast websites for local businesses and startups in Buffalo, NY. Clean design, clearer messaging, and practical page structure help turn visits into real conversations.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Link
-              href="/contact"
+              href="/#contact"
               className={cn(
                 buttonVariants({ size: "lg" }),
                 "min-w-44 px-6 py-3 font-semibold"
@@ -40,13 +40,13 @@ export default function Hero() {
             </Link>
 
             <Link
-              href="/portfolio"
+              href="/blog"
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
                 "group min-w-44 px-6 py-3 font-semibold"
               )}
             >
-              View Our Work
+              Read the Blog
               <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </div>

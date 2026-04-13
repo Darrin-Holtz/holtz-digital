@@ -39,17 +39,17 @@ export default function HomeServicesSection() {
         <div className="absolute right-0 bottom-0 h-56 w-56 rounded-full bg-sky-500/10 blur-3xl" />
       </div>
 
-      <div className="mx-auto max-w-6xl">
+      <div className="w-full">
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-4 py-2 text-xs font-semibold tracking-wider text-primary uppercase backdrop-blur">
             <ShieldCheck className="size-3.5" />
             Service Snapshot
           </p>
           <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-5xl">
-            Built for speed, clarity, and growth.
+            Built for speed, clarity, and better next steps.
           </h2>
           <p className="mt-5 text-lg text-muted-foreground">
-            Everything is designed to improve the user journey and turn more visits into qualified leads.
+            Each service is scoped to reduce friction in the user journey and make it easier for the right visitors to contact you.
           </p>
         </div>
 
@@ -77,14 +77,14 @@ export default function HomeServicesSection() {
         </div>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:justify-start">
-          <Link href="/contact" className={buttonVariants({ size: "lg" })}>
+          <Link href="/#contact" className={buttonVariants({ size: "lg" })}>
             Talk About Your Project
           </Link>
           <Link
-            href="/portfolio"
+            href="/blog"
             className={cn(buttonVariants({ variant: "outline", size: "lg" }), "group")}
           >
-            See Sample Work
+            Read SEO and Web Tips
             <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>

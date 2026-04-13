@@ -25,6 +25,8 @@ export function Navbar() {
                     </h1>
                 </Link>
                 <div className="flex items-center gap-2">                    
+                    <Link className={buttonVariants({ variant: "ghost" })} href="/about">About</Link>
+                    <Link className={buttonVariants({ variant: "ghost" })} href="/web-design">Web Design</Link>
                     <Link className={buttonVariants({ variant: "ghost" })} href="/blog">Blog</Link>
                     {!isLoading && isAuthenticated && profile?.role === "admin" && (
                         <Link className={buttonVariants({ variant: "ghost" })} href="/dashboard">Dashboard</Link>

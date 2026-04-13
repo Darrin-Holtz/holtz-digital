@@ -27,9 +27,9 @@ const faqs = [
       "Yes. I offer ongoing updates, maintenance, and optimization support so your website stays healthy as your business grows.",
   },
   {
-    question: "How do we get started?",
+    question: "How do I get started?",
     answer:
-      "Start with a quick discovery call. We will define your goals, target audience, and the pages you need, then map out a clear build plan.",
+      "Start with a quick discovery call. I will define your goals, target audience, and the pages you need, then map out a clear build plan.",
   },
 ];
 
@@ -40,7 +40,7 @@ export default function HomeFaqSection() {
         <div className="absolute left-1/2 top-10 h-52 w-52 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" />
       </div>
 
-      <div className="mx-auto max-w-5xl">
+      <div className="w-full">
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-4 py-2 text-xs font-semibold tracking-wider text-primary uppercase backdrop-blur">
             <HelpCircle className="size-3.5" />

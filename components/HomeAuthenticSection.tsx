@@ -39,7 +39,7 @@ export default function HomeAuthenticSection() {
         <div className="absolute bottom-0 right-0 h-44 w-44 rounded-full bg-sky-500/10 blur-3xl" />
       </div>
 
-      <div className="mx-auto max-w-6xl">
+      <div className="w-full">
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-4 py-2 text-xs font-semibold tracking-wider text-primary uppercase backdrop-blur">
             <Sparkles className="size-3.5" />
@@ -76,7 +76,7 @@ export default function HomeAuthenticSection() {
         </div>
 
         <div className="mt-10 rounded-2xl border border-border/70 bg-card/70 p-6 shadow-sm backdrop-blur sm:p-8">
-          <h3 className="text-xl font-semibold">How we would work together</h3>
+          <h3 className="text-xl font-semibold">How the project works</h3>
           <ul className="mt-4 grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
             {processSteps.map((step, index) => (
               <li key={step} className="flex items-start gap-3">
@@ -89,14 +89,14 @@ export default function HomeAuthenticSection() {
           </ul>
 
           <div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start">
-            <Link href="/contact" className={buttonVariants({ size: "lg" })}>
+            <Link href="/#contact" className={buttonVariants({ size: "lg" })}>
               Get a Free Website Audit
             </Link>
             <Link
-              href="/portfolio"
+              href="/blog"
               className={buttonVariants({ variant: "outline", size: "lg" })}
             >
-              See Sample Work
+              Read Recent Insights
             </Link>
           </div>
         </div>
