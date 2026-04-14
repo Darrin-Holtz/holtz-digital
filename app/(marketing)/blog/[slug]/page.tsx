@@ -15,22 +15,28 @@ type PageProps = {
 };
 
 export const revalidate = 900;
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 const getPosts = unstable_cache(async () => {
-  return fetchQuery(api.posts.getPosts);
+  try {
+    return await fetchQuery(api.posts.getPosts);
+  } catch (error) {
+    console.error("Failed to fetch blog posts during static generation", error);
+    return [];
+  }
 }, ["blog-posts"], { revalidate: 900, tags: ["posts"] });
 
 const getPostBySlug = unstable_cache(async (slug: string) => {
-  return fetchQuery(api.posts.getPostBySlug, { slug });
+  try {
+    return await fetchQuery(api.posts.getPostBySlug, { slug });
+  } catch (error) {
+    console.error(`Failed to fetch blog post for slug \"${slug}\"`, error);
+    return null;
+  }
 }, ["blog-post-by-slug"], { revalidate: 900, tags: ["posts"] });
 
 export async function generateStaticParams() {
   const posts = await getPosts();
-
-  if (posts.length === 0) {
-    return [{ slug: "__placeholder__" }];
-  }
 
   return Array.from(new Set(posts.map((post) => post.slug))).map((slug) => ({
     slug,

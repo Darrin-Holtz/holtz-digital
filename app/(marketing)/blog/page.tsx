@@ -18,7 +18,12 @@ export const metadata: Metadata = {
 export const revalidate = 900;
 
 const getPosts = unstable_cache(async () => {
-  return fetchQuery(api.posts.getPosts);
+  try {
+    return await fetchQuery(api.posts.getPosts);
+  } catch (error) {
+    console.error("Failed to fetch blog posts during prerender", error);
+    return [];
+  }
 }, ["blog-posts"], { revalidate: 900, tags: ["posts"] });
 
 export default async function BlogPage() {
