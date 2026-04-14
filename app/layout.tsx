@@ -3,8 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
-import { ConvexClientProvider } from "./ConvexClientProvider";
-import InitProfile from "@/components/InitProfile";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -81,15 +79,12 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <ConvexClientProvider>
-          <InitProfile />
-          <Providers>
-            <main className="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-8">              
-              {children}
-            </main>
-            <Toaster closeButton />
-          </Providers>
-        </ConvexClientProvider>
+        <Providers>
+          <main className="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-8">
+            {children}
+          </main>
+          <Toaster closeButton />
+        </Providers>
       </body>
     </html>
   );

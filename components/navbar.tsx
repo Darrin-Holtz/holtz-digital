@@ -3,16 +3,15 @@
 import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
 import { ThemeToggle } from "./theme-toggle";
-import { useConvexAuth, useQuery } from "convex/react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { usePathname, useRouter } from "next/navigation";
 import { SearchInput } from "./SearchInput";
-import { api } from "@/convex/_generated/api";
 
 export function Navbar() {
-    const { isAuthenticated, isLoading } = useConvexAuth();
-    const profile = useQuery(api.profiles.getCurrentProfile);
+    const session = authClient.useSession();
+    const isAuthenticated = Boolean(session.data?.user);
+    const isLoading = session.isPending;
     const router = useRouter();
     const pathname = usePathname();
 
@@ -28,9 +27,6 @@ export function Navbar() {
                     <Link className={buttonVariants({ variant: "ghost" })} href="/about">About</Link>
                     <Link className={buttonVariants({ variant: "ghost" })} href="/web-design">Web Design</Link>
                     <Link className={buttonVariants({ variant: "ghost" })} href="/blog">Blog</Link>
-                    {!isLoading && isAuthenticated && profile?.role === "admin" && (
-                        <Link className={buttonVariants({ variant: "ghost" })} href="/dashboard">Dashboard</Link>
-                    )}
                 </div>                
             </div>
             <div className="flex items-center gap-2">

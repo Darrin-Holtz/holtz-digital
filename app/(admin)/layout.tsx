@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { api } from "@/convex/_generated/api";
 import { convexAuth } from "@/lib/auth-server";
 import { AdminNavbar } from "@/components/admin/admin-navbar";
+import { ConvexClientProvider } from "@/app/ConvexClientProvider";
 
 export default async function AdminLayout({
   children,
@@ -36,7 +37,7 @@ async function AdminLayoutContent({
   return (
     <>
       <AdminNavbar />
-      {children}
+      <ConvexClientProvider>{children}</ConvexClientProvider>
     </>
   );
 }

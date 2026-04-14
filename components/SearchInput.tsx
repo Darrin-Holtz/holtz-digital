@@ -1,23 +1,62 @@
+"use client";
+
 import { Loader2, Search } from "lucide-react";
 import { Input } from "./ui/input";
-import React, { useState } from "react";
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+
+type SearchResult = {
+  _id: string;
+  title: string;
+  body: string;
+  slug?: string;
+};
 
 export function SearchInput() {
     const [term, setTerm] = useState("");
     const [open, setOpen] = useState(false);
+    const [results, setResults] = useState<SearchResult[] | undefined>(undefined);
 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement>){
         setTerm(e.target.value);
         setOpen(true);
     }
 
-    const results = useQuery(
-        api.posts.searchPosts,
-        term.length >= 2 ? { limit: 5, term: term } : "skip"
-    )
+    useEffect(() => {
+        if (term.length < 2) {
+            setResults(undefined);
+            return;
+        }
+
+        const controller = new AbortController();
+
+        const run = async () => {
+            try {
+                const response = await fetch(`/api/search?term=${encodeURIComponent(term)}`, {
+                    signal: controller.signal,
+                });
+
+                if (!response.ok) {
+                    throw new Error("Search request failed");
+                }
+
+                const data = (await response.json()) as SearchResult[];
+                setResults(data);
+            } catch (error) {
+                if ((error as Error).name === "AbortError") {
+                    return;
+                }
+
+                console.error(error);
+                setResults([]);
+            }
+        };
+
+        setResults(undefined);
+        void run();
+
+        return () => controller.abort();
+    }, [term]);
 
     return (
         <div className="relative w-full max-w-sm z-10">
