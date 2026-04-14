@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import { ConvexClientProvider } from "./ConvexClientProvider";
+import InitProfile from "@/components/InitProfile";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -82,6 +82,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ConvexClientProvider>
+          <InitProfile />
           <Providers>
             <main className="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-8">              
               {children}

@@ -1,6 +1,7 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 import { internal } from "./_generated/api";
+import { authComponent } from "./auth";
 
 /**
  * GET PROFILE
@@ -21,27 +22,23 @@ export const getByUserId = query({
  * CREATE PROFILE
  */
 export const createProfile = mutation({
-  args: {
-    userId: v.string(),
-    email: v.string(),
-    role: v.string(),
-  },
+  args: {},
   handler: async (ctx) => {
-    const identity = await ctx.auth.getUserIdentity();
+    const user = await authComponent.safeGetAuthUser(ctx);
 
-    if (!identity) return null;
+    if (!user) return null;
 
     const existing = await ctx.db
       .query("profiles")
       .withIndex("by_user", (q) =>
-        q.eq("userId", identity.subject)
+        q.eq("userId", user._id)
       )
       .first();
 
     if (existing) return existing;
 
     const profileId = await ctx.db.insert("profiles", {
-      userId: identity.subject,
+      userId: user._id,
       role: "user", // ✅ ALWAYS default to user
     });
 
@@ -56,17 +53,15 @@ export const createProfile = mutation({
 export const getCurrentProfile = query({
   args: {},
   handler: async (ctx) => {
-    const identity = await ctx.auth.getUserIdentity();
+    const user = await authComponent.safeGetAuthUser(ctx);
 
-    console.log("IDENTITY:", identity);
-
-    if (!identity) return null;
+    if (!user) return null;
 
     return ctx.db
       .query("profiles")
       .withIndex("by_user", (q) =>
-        q.eq("userId", identity.subject)
+        q.eq("userId", user._id)
       )
-      .unique();
+      .first();
   },
 });
