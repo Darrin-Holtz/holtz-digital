@@ -4,11 +4,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { fetchQuery } from "convex/nextjs";
 import type { Metadata } from "next";
+import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
-import { Suspense } from "react";
-
-export const revalidate = 30;
 
 export const metadata: Metadata = {
   title: "Blog | Darrin Holtz",
@@ -17,7 +15,15 @@ export const metadata: Metadata = {
   authors: [{ name: "Darrin Holtz" }],
 };
 
-export default function BlogPage() {
+export const revalidate = 900;
+
+const getPosts = unstable_cache(async () => {
+  return fetchQuery(api.posts.getPosts);
+}, ["blog-posts"], { revalidate: 900, tags: ["posts"] });
+
+export default async function BlogPage() {
+  const data = await getPosts();
+
   return (
     <div className="py-12">
       <div className="text-center pb-12">
@@ -28,9 +34,43 @@ export default function BlogPage() {
           Insights, lessons, and trends from my work.
         </p>
       </div>
-      <Suspense fallback={<SkeletonLoadingUi />}>
-        <LoadBlogList />
-      </Suspense>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {data?.map((post) => (
+          <Card key={post._id} className="pt-0">
+            <div className="relative h-48 w-full overflow-hidden">
+              <Image
+                src={post.imageUrl ?? "https://images.unsplash.com/photo-1773754532196-014342510e64?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8"}
+                alt="image"
+                loading="eager"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="rounded-t-lg object-cover"
+              />
+            </div>
+
+            <CardContent>
+              <div className="text-red-500 text-sm">
+              </div>
+              <Link href={`/blog/${post.slug}`}>
+                <h1 className="text-2xl font-bold hover:text-primary">
+                  {post.title}
+                </h1>
+              </Link>
+              <p className="text-muted-foreground line-clamp-3">{toTextExcerpt(post.body)}</p>
+            </CardContent>
+            <CardFooter>
+              <Link
+                className={buttonVariants({
+                  className: "w-full",
+                })}
+                href={`/blog/${post.slug}`}
+              >
+                Read more
+              </Link>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }
@@ -39,50 +79,6 @@ function toTextExcerpt(html: string, maxLength = 140) {
   const text = html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
   if (text.length <= maxLength) return text;
   return `${text.slice(0, maxLength).trim()}...`;
-}
-
-async function LoadBlogList() {
-  const data = await fetchQuery(api.posts.getPosts);
-
-  return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {data?.map((post) => (
-        <Card key={post._id} className="pt-0">
-          <div className="relative h-48 w-full overflow-hidden">
-            <Image
-              src={post.imageUrl ?? "https://images.unsplash.com/photo-1773754532196-014342510e64?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8"}
-              alt="image"
-              loading="eager"
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="rounded-t-lg object-cover"
-            />
-          </div>
-
-          <CardContent>
-            <div className="text-red-500 text-sm">
-            </div>
-            <Link href={`/blog/${post.slug}`}>
-              <h1 className="text-2xl font-bold hover:text-primary">
-                {post.title}
-              </h1>
-            </Link>
-            <p className="text-muted-foreground line-clamp-3">{toTextExcerpt(post.body)}</p>
-          </CardContent>
-          <CardFooter>
-            <Link
-              className={buttonVariants({
-                className: "w-full",
-              })}
-              href={`/blog/${post.slug}`}
-            >
-              Read more
-            </Link>
-          </CardFooter>
-        </Card>
-      ))}
-    </div>
-  );
 }
 
 function SkeletonLoadingUi() {

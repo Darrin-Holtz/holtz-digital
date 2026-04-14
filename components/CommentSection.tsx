@@ -10,9 +10,8 @@ import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { Id } from "@/convex/_generated/dataModel";
 import {
-Preloaded,
 useMutation,
-usePreloadedQuery,
+useQuery,
 useConvexAuth,
 } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -34,10 +33,9 @@ return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
 
 export function CommentSection(props: {
 postId: Id<"posts">;
-preloadedComments: Preloaded<typeof api.comments.getCommentsByPostId>;
 }) {
 const [isPending, startTransition] = useTransition();
-const data = usePreloadedQuery(props.preloadedComments);
+const data = useQuery(api.comments.getCommentsByPostId, { postId: props.postId });
 const createComment = useMutation(api.comments.createComment);
 const { isAuthenticated, isLoading } = useConvexAuth();
 

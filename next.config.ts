@@ -3,8 +3,6 @@ import path from "path";
 
 export const runtime = "nodejs";
 
-const isProduction = process.env.NODE_ENV === "production";
-
 const nextConfig: NextConfig = {  
   experimental: {
     serverActions: {
@@ -17,7 +15,7 @@ const nextConfig: NextConfig = {
   },
 
   turbopack: {},
-  cacheComponents: isProduction,
+  cacheComponents: false,
   async headers() {
     return [
       {

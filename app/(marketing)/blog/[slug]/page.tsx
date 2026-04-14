@@ -1,25 +1,44 @@
-import { CommentSection } from "@/components/CommentSection";
-import { PostPresence } from "@/components/PostPresence";
+import { PostCommentsWidget, PostPresenceWidget } from "@/components/PostLiveWidgets";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { api } from "@/convex/_generated/api";
-import { preloadQuery, fetchQuery } from "convex/nextjs";
+import { fetchQuery } from "convex/nextjs";
 import { ArrowLeft } from "lucide-react";
+import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-
-export const revalidate = 30;
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
+export const revalidate = 900;
+export const dynamicParams = false;
+
+const getPosts = unstable_cache(async () => {
+  return fetchQuery(api.posts.getPosts);
+}, ["blog-posts"], { revalidate: 900, tags: ["posts"] });
+
+const getPostBySlug = unstable_cache(async (slug: string) => {
+  return fetchQuery(api.posts.getPostBySlug, { slug });
+}, ["blog-post-by-slug"], { revalidate: 900, tags: ["posts"] });
+
+export async function generateStaticParams() {
+  const posts = await getPosts();
+
+  if (posts.length === 0) {
+    return [{ slug: "__placeholder__" }];
+  }
+
+  return posts.map((post) => ({ slug: post.slug }));
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
 
-  const post = await fetchQuery(api.posts.getPostBySlug, { slug });
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     return { title: "Post not found | Darrin Holtz" };
@@ -34,19 +53,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function PostSlugRoute({ params }: PageProps) {
   const { slug } = await params;
 
-  const post = await fetchQuery(api.posts.getPostBySlug, { slug });
+  const post = await getPostBySlug(slug);
 
-  if (!post) redirect("/blog");
+  if (!post) notFound();
 
   const imageSrc =
     post.imageUrl && post.imageUrl.trim() !== ""
       ? post.imageUrl
       : "/default-image.jpg";
-
-  const preloadedComments = await preloadQuery(
-    api.comments.getCommentsByPostId,
-    { postId: post._id }
-  );
 
   return (
     <div className="max-w-3xl mx-auto py-8 px-4">
@@ -72,7 +86,7 @@ export default async function PostSlugRoute({ params }: PageProps) {
             year: "numeric",
           })}
         </p>
-        <PostPresence roomId={post._id} />
+        <PostPresenceWidget postId={post._id} />
       </div>
 
       <Separator className="my-8" />
@@ -84,7 +98,7 @@ export default async function PostSlugRoute({ params }: PageProps) {
 
       <Separator className="my-8" />
 
-      <CommentSection postId={post._id} preloadedComments={preloadedComments} />
+      <PostCommentsWidget postId={post._id} />
     </div>
   );
 }

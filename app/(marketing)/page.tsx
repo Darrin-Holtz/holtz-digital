@@ -3,12 +3,7 @@ import HomeAuthenticSection from "@/components/HomeAuthenticSection";
 import HomeServicesSection from "@/components/HomeServicesSection";
 import HomeFaqSection from "@/components/HomeFaqSection";
 import HomeContactSection from "@/components/HomeContactSection";
-import { unstable_noStore as noStore } from "next/cache";
 import type { Metadata } from "next";
-import { connection } from "next/server";
-
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Buffalo Web Design for Local Businesses",
@@ -127,9 +122,6 @@ const homepageSchema = {
 };
 
 export default async function Home() {
-  noStore();
-  await connection();
-
   return (
     <div>
       <script

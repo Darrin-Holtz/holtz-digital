@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Clock3, Gauge, LayoutTemplate, Search, Smartphone, Sparkles } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
@@ -262,32 +263,57 @@ export default function WebDesignPage() {
             </div>
           </div>
 
-          <Card className="border-border/70 bg-card/80 shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-2xl">What trust looks like in practice</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="grid gap-3 text-sm leading-7 text-muted-foreground">
-                {trustSignals.map((item) => (
-                  <li key={item} className="rounded-xl border border-border/70 bg-background/60 p-3">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
+          <div className="flex flex-col gap-6">
+            <div className="overflow-hidden rounded-2xl border border-border/70 shadow-sm">
+              <Image
+                src="/web-design.jpg"
+                alt="Web design workspace with dual monitors showing design work in progress"
+                width={900}
+                height={600}
+                className="h-auto w-full object-cover"
+                priority
+              />
+            </div>
+
+            <Card className="border-border/70 bg-card/80 shadow-sm">
+              <CardHeader>
+                <CardTitle className="text-2xl">What trust looks like in practice</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="grid gap-3 text-sm leading-7 text-muted-foreground">
+                  {trustSignals.map((item) => (
+                    <li key={item} className="rounded-xl border border-border/70 bg-background/60 p-3">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
       <section className="pt-16">
-        <div className="max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">What web design includes</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-            Clear deliverables so pricing makes sense.
-          </h2>
-          <p className="mt-4 text-base leading-8 text-muted-foreground">
-            This is the baseline scope I use so there is no confusion about what you are paying for.
-          </p>
+        <div className="grid gap-8 lg:grid-cols-[1fr_.95fr] lg:items-center">
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">What web design includes</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+              Clear deliverables so pricing makes sense.
+            </h2>
+            <p className="mt-4 text-base leading-8 text-muted-foreground">
+              This is the baseline scope I use so there is no confusion about what you are paying for.
+            </p>
+          </div>
+
+          <div className="overflow-hidden rounded-2xl border border-border/70 shadow-sm">
+            <Image
+              src="/Figma-Prototype.jpg"
+              alt="Figma prototype open in design tool showing UI components and screen layout"
+              width={1400}
+              height={700}
+              className="h-auto w-full"
+            />
+          </div>
         </div>
 
         <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">

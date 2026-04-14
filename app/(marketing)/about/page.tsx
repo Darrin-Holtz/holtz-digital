@@ -153,12 +153,12 @@ export default function AboutPage() {
                 <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background/70 to-transparent" />
               </div>
               <Image
-                src="/DarrinHoltz.png"
-                alt="Portrait of Darrin Holtz"
+                src="/Buffalo_NY.jpg"
+                alt="Image of Buffalo, NY"
                 width={1000}
                 height={1400}
                 priority
-                className="relative z-10 h-[420px] w-full -translate-x-[25px] object-contain object-bottom sm:h-[520px]"
+                className="relative z-10 h-[420px] w-full object-cover object-bottom sm:h-[520px]"
               />
               <div className="absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-background via-background/70 to-transparent p-6">
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Buffalo based</p>
