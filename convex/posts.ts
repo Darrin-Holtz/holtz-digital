@@ -54,10 +54,11 @@ export const getPosts = query({
 export const getPostBySlug = query({
   args: { slug: v.string() },
   handler: async (ctx, { slug }) => {
-    const post = await ctx.db
+    const [post] = await ctx.db
       .query("posts")
       .withIndex("by_slug", (q) => q.eq("slug", slug))
-      .unique();
+      .order("desc")
+      .take(1);
 
     if (!post) return null;
 

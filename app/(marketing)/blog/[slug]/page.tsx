@@ -32,7 +32,9 @@ export async function generateStaticParams() {
     return [{ slug: "__placeholder__" }];
   }
 
-  return posts.map((post) => ({ slug: post.slug }));
+  return Array.from(new Set(posts.map((post) => post.slug))).map((slug) => ({
+    slug,
+  }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
