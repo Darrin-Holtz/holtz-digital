@@ -70,7 +70,7 @@ export default async function BlogPage() {
                 })}
                 href={`/blog/${post.slug}`}
               >
-                Read more
+                Read Blog Post
               </Link>
             </CardFooter>
           </Card>
