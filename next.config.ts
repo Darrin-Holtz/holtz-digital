@@ -37,7 +37,7 @@ const nextConfig: NextConfig = {
         port: "",
       },
       {
-        hostname: "secret-fish-571.convex.cloud",
+        hostname: "vibrant-woodpecker-180.convex.cloud",
         protocol: "https",
         port: "",
       },
