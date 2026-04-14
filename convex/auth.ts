@@ -9,11 +9,10 @@ export const authComponent = createClient<DataModel>(components.betterAuth);
 
 export const createAuth = (ctx: GenericCtx<DataModel>) => {
   return betterAuth({
-    baseURL: "http://localhost:5000",
+    baseURL: "https://holtz-digital.vercel.app/",
 
     trustedOrigins: [
-      "http://localhost:5000",
-      "https://secret-fish-571.convex.site",
+      "https://holtz-digital.vercel.app",
     ],
 
     database: authComponent.adapter(ctx),

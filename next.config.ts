@@ -8,8 +8,7 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: "5mb",
       allowedOrigins: [
-        "supreme-journey-r474jx5r946qfwpw7-5000.app.github.dev",
-        "localhost:5000",
+        "https://holtz-digital.vercel.app",
       ],
     },
   },
