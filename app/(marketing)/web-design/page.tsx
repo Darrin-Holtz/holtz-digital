@@ -21,6 +21,47 @@ export const metadata: Metadata = {
   },
 };
 
+const webDesignSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": "https://holtzdigital.com/web-design#service",
+      name: "Web Design Services",
+      description:
+        "Custom website design, UX/UI design, mobile responsiveness, SEO-friendly structure, speed optimization, and CMS setup for Buffalo-area businesses.",
+      url: "https://holtzdigital.com/web-design",
+      provider: {
+        "@id": "https://holtzdigital.com/#organization",
+      },
+      areaServed: ["Buffalo, NY", "Western New York"],
+      serviceType: "Web Design",
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Web Design Deliverables",
+        itemListElement: [
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Custom website design" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "UX/UI design" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Mobile responsiveness" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "SEO-friendly structure" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Speed optimization" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "CMS setup" } },
+        ],
+      },
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://holtzdigital.com/web-design#webpage",
+      url: "https://holtzdigital.com/web-design",
+      name: "Web Design Services | Holtz Digital",
+      description:
+        "Clear web design scope and deliverables so you know what you are paying for and why the work matters.",
+      isPartOf: { "@id": "https://holtzdigital.com/#website" },
+      about: { "@id": "https://holtzdigital.com/web-design#service" },
+    },
+  ],
+};
+
 const includedItems = [
   {
     title: "Custom website design",
@@ -220,6 +261,10 @@ const websiteTypes = [
 export default function WebDesignPage() {
   return (
     <div className="relative overflow-hidden pb-20 pt-10 sm:pt-14">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webDesignSchema) }}
+      />
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute left-1/2 top-8 h-72 w-72 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" />
         <div className="absolute -left-20 top-40 h-80 w-80 rounded-full bg-sky-500/10 blur-3xl" />
