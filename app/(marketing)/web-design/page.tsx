@@ -59,6 +59,36 @@ const webDesignSchema = {
       isPartOf: { "@id": "https://holtzdigital.com/#website" },
       about: { "@id": "https://holtzdigital.com/web-design#service" },
     },
+    {
+      "@type": "FAQPage",
+      "@id": "https://holtzdigital.com/web-design#faq",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Do you handle hosting?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. I can recommend the right hosting provider, configure the environment, and handle deployment so the site is stable from day one.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is the website mine after completion?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. The website and content are yours after final payment. You keep full ownership and control of your project assets.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do you handle the domain?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "I can guide domain setup, DNS configuration, and domain connection. If you already own a domain, I can connect it to your new site.",
+          },
+        },
+      ],
+    },
   ],
 };
 

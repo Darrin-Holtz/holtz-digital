@@ -48,7 +48,7 @@ export const metadata: Metadata = {
       "Holtz Digital designs fast, SEO-ready websites for Buffalo businesses that want more qualified leads, better UX, and stronger local visibility.",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Buffalo Web Design and Local SEO | Holtz Digital",
     description:
       "Fast, SEO-ready websites for Buffalo businesses that want more qualified leads.",
