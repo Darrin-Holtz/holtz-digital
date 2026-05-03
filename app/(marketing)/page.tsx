@@ -36,6 +36,9 @@ const homepageSchema = {
       description:
         "Holtz Digital offers web design, local SEO foundations, website optimization, and maintenance for businesses in Buffalo, NY and Western New York.",
       url: "https://holtzdigital.com",
+      telephone: "+1-716-461-3129",
+      image: "https://holtzdigital.com/DarrinHoltz.png",
+      logo: "https://holtzdigital.com/DarrinHoltz.png",
       areaServed: ["Buffalo, NY", "Western New York"],
       priceRange: "$$",
       address: {
@@ -43,6 +46,21 @@ const homepageSchema = {
         addressLocality: "Buffalo",
         addressRegion: "NY",
         addressCountry: "US",
+      },
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          opens: "10:00",
+          closes: "18:00",
+        },
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+1-716-461-3129",
+        contactType: "customer service",
+        areaServed: "US",
+        availableLanguage: "English",
       },
       sameAs: ["https://github.com/Darrin-Holtz"],
       serviceType: [
