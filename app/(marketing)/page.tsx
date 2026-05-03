@@ -1,10 +1,12 @@
 import HeroSection from "@/components/HeroSection";
 import HomeAuthenticSection from "@/components/HomeAuthenticSection";
 import HomeServicesSection from "@/components/HomeServicesSection";
-import HomeWorkSection from "@/components/HomeWorkSection";
-import HomeFaqSection from "@/components/HomeFaqSection";
-import HomeContactSection from "@/components/HomeContactSection";
+import dynamic from "next/dynamic";
 import type { Metadata } from "next";
+
+const HomeWorkSection = dynamic(() => import("@/components/HomeWorkSection"));
+const HomeFaqSection = dynamic(() => import("@/components/HomeFaqSection"));
+const HomeContactSection = dynamic(() => import("@/components/HomeContactSection"));
 
 export const metadata: Metadata = {
   title: "Buffalo Web Design for Local Businesses",
