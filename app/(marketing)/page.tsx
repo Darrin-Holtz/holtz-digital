@@ -1,6 +1,7 @@
 import HeroSection from "@/components/HeroSection";
 import HomeAuthenticSection from "@/components/HomeAuthenticSection";
 import HomeServicesSection from "@/components/HomeServicesSection";
+import HomeWorkSection from "@/components/HomeWorkSection";
 import HomeFaqSection from "@/components/HomeFaqSection";
 import HomeContactSection from "@/components/HomeContactSection";
 import type { Metadata } from "next";
@@ -131,6 +132,7 @@ export default async function Home() {
       <HeroSection />
       <HomeAuthenticSection />
       <HomeServicesSection />
+      <HomeWorkSection />
       <HomeFaqSection />
       <HomeContactSection />
     </div>
