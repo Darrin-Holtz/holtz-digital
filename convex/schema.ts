@@ -32,4 +32,12 @@ export default defineSchema({
         usersCount: v.number(),
         commentsCount: v.number(),
     }).index("by_key", ["key"]),
+    inquiries: defineTable({
+        name: v.string(),
+        email: v.string(),
+        projectType: v.string(),
+        budget: v.string(),
+        details: v.string(),
+        status: v.string(), // "new" | "read" | "replied"
+    }).index("by_status", ["status"]),
 })

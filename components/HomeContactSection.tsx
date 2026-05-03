@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { toast } from "sonner";
 
 const PROJECT_TYPES = [
   "Website Design",
@@ -76,24 +77,29 @@ export default function HomeContactSection() {
   const [projectType, setProjectType] = useState(PROJECT_TYPES[0]);
   const [budget, setBudget] = useState(BUDGET_RANGES[1]);
   const [details, setDetails] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-  function submitInquiry(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    const subject = encodeURIComponent(`Website inquiry from ${name || "New lead"}`);
-    const body = encodeURIComponent(
-      [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        `Project Type: ${projectType}`,
-        `Budget: ${budget}`,
-        "",
-        "Project Details:",
-        details,
-      ].join("\n")
-    );
-
-    window.location.href = `mailto:hello@holtzdigital.com?subject=${subject}&body=${body}`;
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, projectType, budget, details }),
+      });
+      if (!res.ok) throw new Error();
+      toast.success("Inquiry sent! I'll be in touch shortly.");
+      setName("");
+      setEmail("");
+      setProjectType(PROJECT_TYPES[0]);
+      setBudget(BUDGET_RANGES[1]);
+      setDetails("");
+    } catch {
+      toast.error("Something went wrong. Please try again or email me directly.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -122,7 +128,7 @@ export default function HomeContactSection() {
             <CardTitle>Start your project inquiry</CardTitle>
           </CardHeader>
           <CardContent>
-            <form className="grid gap-5" onSubmit={submitInquiry}>
+            <form className="grid gap-5" onSubmit={handleSubmit}>
               <div className="grid gap-5 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="name">Name</Label>
@@ -186,8 +192,8 @@ export default function HomeContactSection() {
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
-                <Button type="submit" size="lg" className="px-6 py-3">
-                  Send Inquiry
+                <Button type="submit" size="lg" className="px-6 py-3" disabled={submitting}>
+                  {submitting ? "Sending..." : "Send Inquiry"}
                   <Send className="ml-2 size-4" />
                 </Button>
                 <Link href="mailto:hello@holtzdigital.com" className={buttonVariants({ variant: "outline", size: "lg" })}>
