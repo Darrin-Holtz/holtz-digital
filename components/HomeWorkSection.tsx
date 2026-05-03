@@ -60,12 +60,12 @@ export default function HomeWorkSection() {
           {/* Hero screenshot */}
           <div className="relative w-full">
             <Image
-              src="/movie-booking-app.png"
+              src="/movie-booking-app.webp"
               alt="QuickShow home page with featured movie and navigation"
               width={1400}
               height={788}
               className="w-full object-cover object-top"
-              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1280px"
             />
           </div>
 
@@ -78,6 +78,7 @@ export default function HomeWorkSection() {
                 width={700}
                 height={420}
                 className="h-56 w-full object-cover object-top sm:h-72"
+                sizes="(max-width: 640px) 100vw, 50vw"
               />
             </div>
             <div className="relative border-t border-border/60 sm:border-t-0">
@@ -87,6 +88,7 @@ export default function HomeWorkSection() {
                 width={700}
                 height={420}
                 className="h-56 w-full object-cover object-top sm:h-72"
+                sizes="(max-width: 640px) 100vw, 50vw"
               />
             </div>
           </div>
