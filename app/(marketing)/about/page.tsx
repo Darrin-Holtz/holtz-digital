@@ -30,6 +30,43 @@ export const metadata: Metadata = {
   },
 };
 
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://holtzdigital.com/#person",
+      name: "Darrin Holtz",
+      jobTitle: "Web Designer",
+      description:
+        "Buffalo-based web designer building from-scratch websites in HTML, Next.js, WordPress, and other modern stacks for local businesses.",
+      url: "https://holtzdigital.com/about",
+      image: "https://holtzdigital.com/DarrinHoltz.png",
+      telephone: "+1-716-461-3129",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Buffalo",
+        addressRegion: "NY",
+        addressCountry: "US",
+      },
+      sameAs: ["https://github.com/Darrin-Holtz"],
+      worksFor: {
+        "@id": "https://holtzdigital.com/#organization",
+      },
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://holtzdigital.com/about#webpage",
+      url: "https://holtzdigital.com/about",
+      name: "About Holtz Digital",
+      description:
+        "Learn about Holtz Digital, a Buffalo-focused web designer building from-scratch websites for local businesses.",
+      isPartOf: { "@id": "https://holtzdigital.com/#website" },
+      about: { "@id": "https://holtzdigital.com/#person" },
+    },
+  ],
+};
+
 const principles = [
   {
     title: "Built From Scratch",
@@ -79,6 +116,10 @@ const proofPoints = [
 export default function AboutPage() {
   return (
     <div className="relative overflow-hidden pb-20 pt-10 sm:pt-14">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }}
+      />
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute left-1/2 top-8 h-72 w-72 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" />
         <div className="absolute -left-20 top-40 h-80 w-80 rounded-full bg-sky-500/10 blur-3xl" />
