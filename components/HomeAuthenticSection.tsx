@@ -1,34 +1,51 @@
-import Link from "next/link";
-import { Compass, Gauge, Sparkles, Target } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Gauge, Layers, Sparkles, TrendingUp } from "lucide-react";
 
 const outcomes = [
   {
-    title: "Performance First",
+    title: "Performance That Feels Instant",
     description:
-      "Fast, mobile-first builds that feel premium and reduce drop-off before users bounce.",
+      "Fast, mobile-first websites engineered to keep users engaged and reduce drop-off before they leave the page.",
     icon: Gauge,
   },
   {
-    title: "Conversion Focus",
+    title: "Designed to Convert",
     description:
-      "Clear messaging, stronger page structure, and CTAs that guide visitors toward real action.",
-    icon: Target,
+      "Clear messaging, intentional page structure, and strategic calls-to-action that guide visitors toward meaningful action.",
+    icon: Layers,
   },
   {
-    title: "Easy to Maintain",
+    title: "Built for Long-Term Growth",
     description:
-      "A clean build you can actually update without wrestling a bloated, fragile stack.",
-    icon: Compass,
+      "Clean, scalable builds that are easy to manage, easy to expand, and never weighed down by bloated systems.",
+    icon: TrendingUp,
   },
 ];
 
 const processSteps = [
-  "Quick strategy call to align on goals",
-  "Design + build in clear milestones",
-  "Launch with SEO-ready page structure",
-  "Iterate based on what users actually do",
+  {
+    number: "01",
+    title: "Strategy & Direction",
+    description:
+      "A focused discovery call to understand your business, goals, and what the website actually needs to accomplish.",
+  },
+  {
+    number: "02",
+    title: "Design & Development",
+    description:
+      "Structured milestones with clear communication from wireframes to launch-ready development.",
+  },
+  {
+    number: "03",
+    title: "Launch & Optimization",
+    description:
+      "SEO-ready foundations, fast performance, and a polished experience across every device.",
+  },
+  {
+    number: "04",
+    title: "Iterate & Improve",
+    description:
+      "Post-launch improvements informed by real user behavior, engagement, and business growth.",
+  },
 ];
 
 export default function HomeAuthenticSection() {
@@ -40,64 +57,57 @@ export default function HomeAuthenticSection() {
       </div>
 
       <div className="w-full">
+        {/* Section header */}
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-4 py-2 text-xs font-semibold tracking-wider text-primary uppercase backdrop-blur">
             <Sparkles className="size-3.5" />
-            Built on real outcomes
+            Built on Real Business Outcomes
           </p>
           <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-5xl">
-            No fake case studies. Just websites that are clear, fast, and built to convert.
+            No inflated numbers. No fake case studies.
           </h2>
-          <p className="mt-5 text-lg text-muted-foreground">
-            I have not shipped projects for every local niche yet, so I focus on what I can honestly promise: sharp design, clean architecture, and measurable improvements in usability.
+          <p className="mt-5 text-lg leading-8 text-muted-foreground">
+            Just fast, modern websites built to create clarity, build trust, and drive action. Holtz Digital focuses on what actually matters: strong messaging, clean architecture, and user experiences designed to turn visits into real customer conversations.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
+        {/* Outcome cards */}
+        <div className="mt-14 grid gap-6 md:grid-cols-3">
           {outcomes.map((item) => {
             const Icon = item.icon;
             return (
-              <Card
+              <div
                 key={item.title}
-                className="border-border/70 bg-gradient-to-b from-card to-card/70 shadow-sm"
+                className="group rounded-2xl border border-border/70 bg-gradient-to-b from-card to-card/60 p-6 shadow-sm transition-shadow hover:shadow-md"
               >
-                <CardHeader>
-                  <div className="mb-2 inline-flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                    <Icon className="size-5" />
-                  </div>
-                  <CardTitle>{item.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
-                </CardContent>
-              </Card>
+                <div className="inline-flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Icon className="size-5" />
+                </div>
+                <h3 className="mt-4 text-base font-semibold text-foreground">{item.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.description}</p>
+              </div>
             );
           })}
         </div>
 
-        <div className="mt-10 rounded-2xl border border-border/70 bg-card/70 p-6 shadow-sm backdrop-blur sm:p-8">
-          <h3 className="text-xl font-semibold">How the project works</h3>
-          <ul className="mt-4 grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
-            {processSteps.map((step, index) => (
-              <li key={step} className="flex items-start gap-3">
-                <span className="mt-0.5 inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">
-                  {index + 1}
+        {/* Process steps */}
+        <div className="mt-14">
+          <h3 className="text-center text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+            How Projects Move Forward
+          </h3>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {processSteps.map((step) => (
+              <div
+                key={step.number}
+                className="rounded-2xl border border-border/70 bg-card/70 p-5 backdrop-blur"
+              >
+                <span className="text-3xl font-bold tracking-tighter text-primary/30">
+                  {step.number}
                 </span>
-                <span>{step}</span>
-              </li>
+                <h4 className="mt-2 font-semibold text-foreground">{step.title}</h4>
+                <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{step.description}</p>
+              </div>
             ))}
-          </ul>
-
-          <div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start">
-            <Link href="/#contact" className={buttonVariants({ size: "lg" })}>
-              Get a Free Website Audit
-            </Link>
-            <Link
-              href="/blog"
-              className={buttonVariants({ variant: "outline", size: "lg" })}
-            >
-              Read Recent Insights
-            </Link>
           </div>
         </div>
       </div>

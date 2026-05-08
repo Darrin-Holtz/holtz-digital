@@ -1,7 +1,13 @@
 import Link from "next/link";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { CheckCircle2, Sparkles } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+
+const pills = [
+  "Built for Performance",
+  "Structured for Local SEO",
+  "Designed to Convert",
+];
 
 export default function Hero() {
   return (
@@ -21,14 +27,26 @@ export default function Hero() {
           </p>
 
           <h1 className="mt-6 text-balance text-4xl font-bold tracking-tight text-foreground sm:text-6xl">
-            Web Design for Buffalo Businesses That Want More Qualified Leads
+            Most Buffalo Business Websites Were Built to Exist — Not to Work.
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-muted-foreground">
-            I design and build fast websites for local businesses and startups in Buffalo, NY. Clean design, clearer messaging, and practical page structure help turn visits into real conversations.
+            Holtz Digital builds fast, conversion-focused websites that help local businesses earn trust, improve visibility, and turn more visitors into customers.
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+            {pills.map((pill) => (
+              <span
+                key={pill}
+                className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-background/70 px-3.5 py-1.5 text-xs font-medium text-foreground backdrop-blur"
+              >
+                <CheckCircle2 className="size-3.5 text-primary" />
+                {pill}
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/#contact"
               className={cn(
@@ -36,34 +54,18 @@ export default function Hero() {
                 "min-w-44 px-6 py-3 font-semibold"
               )}
             >
-              Get a Free Quote
+              Book a Discovery Call
             </Link>
 
             <Link
-              href="/blog"
+              href="/#work"
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
-                "group min-w-44 px-6 py-3 font-semibold"
+                "min-w-44 px-6 py-3 font-semibold"
               )}
             >
-              Read the Blog
-              <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-0.5" />
+              View Our Work
             </Link>
-          </div>
-
-          <div className="mt-10 grid gap-3 text-left text-sm text-muted-foreground sm:grid-cols-3">
-            <div className="rounded-xl border border-border/70 bg-background/70 p-4 backdrop-blur">
-              <p className="font-semibold text-foreground">Fast Performance</p>
-              <p className="mt-1">Built for speed across mobile and desktop.</p>
-            </div>
-            <div className="rounded-xl border border-border/70 bg-background/70 p-4 backdrop-blur">
-              <p className="font-semibold text-foreground">Local SEO Foundations</p>
-              <p className="mt-1">Structured pages that search engines can read.</p>
-            </div>
-            <div className="rounded-xl border border-border/70 bg-background/70 p-4 backdrop-blur">
-              <p className="font-semibold text-foreground">Conversion-Focused UX</p>
-              <p className="mt-1">Clear CTAs and messaging that drive action.</p>
-            </div>
           </div>
         </div>
       </div>

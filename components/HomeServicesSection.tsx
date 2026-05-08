@@ -1,33 +1,32 @@
 import Link from "next/link";
-import { ArrowRight, Globe, Search, ShieldCheck, Sparkles, Wrench } from "lucide-react";
+import { ArrowRight, Globe, Search, ShieldCheck, Zap } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 const services = [
   {
-    title: "Website Design",
+    title: "Website Design & Development",
     description:
-      "Clean, modern pages designed to communicate your value quickly and drive the right action.",
+      "Modern websites built to look credible, load fast, and communicate your value with clarity from the first interaction.",
     icon: Globe,
   },
   {
-    title: "Local SEO Foundations",
+    title: "Local Search Visibility",
     description:
-      "On-page structure, content hierarchy, and technical setup to help Buffalo-area searches find you.",
+      "SEO-ready page structure, technical foundations, and content organization designed to help Buffalo-area businesses get discovered locally.",
     icon: Search,
   },
   {
-    title: "Website Care + Updates",
+    title: "Website Management & Support",
     description:
-      "Reliable edits, quality-of-life improvements, and ongoing support to keep your site current.",
-    icon: Wrench,
+      "Ongoing updates, refinements, and technical support that keep your website current, stable, and performing at its best.",
+    icon: ShieldCheck,
   },
   {
-    title: "Performance Optimization",
+    title: "Performance & User Experience",
     description:
-      "Speed and UX tuning across mobile and desktop to lower bounce and improve engagement.",
-    icon: Sparkles,
+      "Speed optimization and UX improvements across mobile and desktop to reduce drop-off and create smoother user journeys.",
+    icon: Zap,
   },
 ];
 
@@ -43,35 +42,36 @@ export default function HomeServicesSection() {
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-4 py-2 text-xs font-semibold tracking-wider text-primary uppercase backdrop-blur">
             <ShieldCheck className="size-3.5" />
-            Service Snapshot
+            Services Built Around Business Growth
           </p>
           <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-5xl">
-            Built for speed, clarity, and better next steps.
+            Every part of the website is designed to reduce friction, strengthen trust, and move the right visitors toward action.
           </h2>
           <p className="mt-5 text-lg text-muted-foreground">
-            Each service is scoped to reduce friction in the user journey and make it easier for the right visitors to contact you.
+            Holtz Digital focuses on modern digital experiences that perform well, communicate clearly, and support long-term business growth.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2">
+        <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-border/70 bg-border/40 md:grid-cols-2">
           {services.map((service) => {
             const Icon = service.icon;
-
             return (
-              <Card
+              <div
                 key={service.title}
-                className="border-border/70 bg-gradient-to-b from-card to-card/70 shadow-sm"
+                className="group flex flex-col gap-4 bg-card p-8 transition-colors hover:bg-card/60"
               >
-                <CardHeader>
-                  <div className="mb-2 inline-flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                    <Icon className="size-5" />
-                  </div>
-                  <CardTitle>{service.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm leading-6 text-muted-foreground">{service.description}</p>
-                </CardContent>
-              </Card>
+                <div className="inline-flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Icon className="size-5" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold tracking-tight text-foreground">
+                    {service.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {service.description}
+                  </p>
+                </div>
+              </div>
             );
           })}
         </div>

@@ -5,25 +5,25 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const stackTags = [
-  "Next.js 16",
-  "React 19",
+  "Next.js",
+  "React",
   "Convex",
-  "Better Auth",
   "Stripe",
-  "TMDB API",
   "TypeScript",
-  "Tailwind CSS 4",
+  "Tailwind CSS",
 ];
 
-const highlights = [
-  "Seats are held in real time — if someone else grabs a seat, it disappears from your screen instantly",
-  "Secure online payment with instant order confirmation",
-  "Your ticket lives on your phone and staff can scan it at the door with a camera",
+const capabilities = [
+  "Real-time seat selection with live availability updates",
+  "Secure online checkout with instant order confirmation",
+  "Mobile ticket delivery with QR-based entry scanning",
+  "Responsive experience optimized for mobile and desktop",
+  "Modern frontend architecture with scalable backend infrastructure",
 ];
 
 export default function HomeWorkSection() {
   return (
-    <section className="relative pt-4 pb-16 sm:pt-8 sm:pb-24">
+    <section id="work" className="relative pt-4 pb-16 sm:pt-8 sm:pb-24">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute right-0 top-10 h-56 w-56 rounded-full bg-primary/15 blur-3xl" />
         <div className="absolute -left-10 bottom-10 h-56 w-56 rounded-full bg-sky-500/10 blur-3xl" />
@@ -33,13 +33,13 @@ export default function HomeWorkSection() {
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-4 py-2 text-xs font-semibold tracking-wider text-primary uppercase backdrop-blur">
             <Layers className="size-3.5" />
-            Recent Work
+            Selected Work
           </p>
           <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-5xl">
-            A recent project I built — from idea to deployed product.
+            A full-stack application designed to demonstrate modern booking flows, real-time interactivity, and production-ready user experience.
           </h2>
           <p className="mt-5 text-lg text-muted-foreground">
-            QuickShow is a movie booking demo app I built to showcase what a modern, full-stack web application looks like end-to-end — from browsing showtimes to a QR-coded mobile ticket.
+            An interactive booking platform built to simulate the complete customer journey — from discovering showtimes to purchasing tickets and scanning entry passes on mobile devices.
           </p>
         </div>
 
@@ -95,21 +95,26 @@ export default function HomeWorkSection() {
         </div>
 
         {/* Project info below the card */}
-        <div className="mt-8 flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
-          {/* Left: name, description, highlights, CTAs */}
+        <div className="mt-8 flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
+          {/* Left: name, description, capabilities, CTAs */}
           <div className="max-w-xl">
             <h3 className="text-2xl font-bold tracking-tight">QuickShow</h3>
             <p className="mt-2 text-muted-foreground">
-              A fully functional movie ticketing app where users can browse showtimes, pick their seats, pay online, and receive a scannable ticket on their phone — all in one seamless flow.
+              A modern movie ticketing platform designed to feel fast, intuitive, and seamless across every interaction — engineered end-to-end as proof of advanced product capability.
             </p>
-            <ul className="mt-4 space-y-2">
-              {highlights.map((point) => (
+
+            <p className="mt-4 text-xs font-semibold tracking-wider text-primary uppercase">
+              Key Capabilities
+            </p>
+            <ul className="mt-2 space-y-2">
+              {capabilities.map((point) => (
                 <li key={point} className="flex items-start gap-2.5 text-sm text-muted-foreground">
                   <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
                   {point}
                 </li>
               ))}
             </ul>
+
             <div className="mt-6 flex flex-wrap gap-3">
               <Link
                 href="https://movie-booking-app-weld.vercel.app/"
@@ -130,16 +135,25 @@ export default function HomeWorkSection() {
             </div>
           </div>
 
-          {/* Right: stack tags */}
-          <div className="flex flex-wrap gap-2 sm:max-w-xs sm:justify-end">
-            {stackTags.map((tag) => (
-              <span
-                key={tag}
-                className="inline-flex items-center rounded-full border border-border/70 bg-background/70 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur"
-              >
-                {tag}
-              </span>
-            ))}
+          {/* Right: stack + why it matters */}
+          <div className="flex flex-col gap-6 sm:max-w-xs">
+            <div>
+              <p className="text-xs font-semibold tracking-wider text-primary uppercase">
+                Built With
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                {stackTags.join(" · ")}
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-border/60 bg-muted/30 p-5">
+              <p className="text-xs font-semibold tracking-wider text-primary uppercase">
+                Why It Matters
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                Modern businesses increasingly need more than static websites. QuickShow demonstrates the kind of scalable, interactive digital experiences Holtz Digital can design and engineer from the ground up.
+              </p>
+            </div>
           </div>
         </div>
       </div>

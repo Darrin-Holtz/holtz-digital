@@ -4,32 +4,32 @@ const faqs = [
   {
     question: "How long does a typical website project take?",
     answer:
-      "Most brochure-style websites take about 2 to 4 weeks depending on scope, content readiness, and revision rounds.",
+      "Most projects take between 2–6 weeks depending on scope, content readiness, and revisions. Larger or more custom builds may require additional time for strategy, integrations, or advanced functionality.",
   },
   {
-    question: "Do you offer SEO with web design?",
+    question: "Is SEO included with web design?",
     answer:
-      "Yes. Every build includes technical and on-page SEO foundations like clean structure, heading hierarchy, metadata-ready pages, and performance optimization.",
+      "Every website includes foundational SEO best practices such as semantic structure, performance optimization, metadata setup, mobile responsiveness, and search-friendly page architecture.",
   },
   {
-    question: "Can you redesign my existing site instead of building from scratch?",
+    question: "Can you redesign an existing website?",
     answer:
-      "Absolutely. I can modernize your current site, improve speed and UX, and keep what is working while removing friction points.",
+      "Yes. Existing websites can often be redesigned and rebuilt with improved structure, performance, messaging, and user experience without starting the business itself from scratch.",
   },
   {
-    question: "Will my site be easy to update after launch?",
+    question: "Will the website be easy to update?",
     answer:
-      "Yes. I build with maintainability in mind so you can update content and basic sections without fighting your codebase.",
+      "The goal is always to create a website that is clean, maintainable, and easy to manage long after launch — without relying on bloated or fragile systems.",
   },
   {
-    question: "Do you provide ongoing support after launch?",
+    question: "Do you offer ongoing support?",
     answer:
-      "Yes. I offer ongoing updates, maintenance, and optimization support so your website stays healthy as your business grows.",
+      "Yes. Ongoing support is available for updates, refinements, performance improvements, and general website maintenance after launch.",
   },
   {
-    question: "How do I get started?",
+    question: "How do we get started?",
     answer:
-      "Start with a quick discovery call. I will define your goals, target audience, and the pages you need, then map out a clear build plan.",
+      "The process starts with a short discovery call to understand your business, goals, and what the website needs to accomplish. From there, the project scope, direction, and next steps are clearly outlined.",
   },
 ];
 
@@ -44,13 +44,13 @@ export default function HomeFaqSection() {
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-4 py-2 text-xs font-semibold tracking-wider text-primary uppercase backdrop-blur">
             <HelpCircle className="size-3.5" />
-            FAQ
+            Frequently Asked Questions
           </p>
           <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-5xl">
-            Questions people ask before they hire me
+            Before We Build
           </h2>
           <p className="mt-5 text-lg text-muted-foreground">
-            Straight answers, no fluff. If you do not see your question here, I can cover it on a quick call.
+            Clear answers about timelines, process, support, and what it is like to work with Holtz Digital. If you have a specific question about your project, we can cover it during a quick discovery call.
           </p>
         </div>
 

@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
 
   turbopack: {},
   cacheComponents: false,
+  staleTimes: {
+    dynamic: 0,
+    static: 0,
+  },
   async headers() {
     return [
       {

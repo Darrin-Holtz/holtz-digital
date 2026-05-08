@@ -113,19 +113,19 @@ export default function HomeContactSection() {
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-4 py-2 text-xs font-semibold tracking-wider text-primary uppercase backdrop-blur">
             <Sparkles className="size-3.5" />
-            Project Inquiry
+            Start Your Project
           </p>
           <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-5xl">
-            Tell me what you are building
+            Let&apos;s Build Something Better
           </h2>
           <p className="mt-5 text-lg text-muted-foreground">
-            Share a few details and I will send back a focused recommendation with next steps.
+            Holtz Digital partners with businesses that want a faster, clearer, and more effective online presence. Share a few details about your project and we&apos;ll outline the next best steps.
           </p>
         </div>
 
         <Card className="mt-12 w-full border-border/70 bg-card/85 shadow-sm backdrop-blur">
           <CardHeader>
-            <CardTitle>Start your project inquiry</CardTitle>
+            <CardTitle>Start your project</CardTitle>
           </CardHeader>
           <CardContent>
             <form className="grid gap-5" onSubmit={handleSubmit}>
@@ -193,7 +193,7 @@ export default function HomeContactSection() {
 
               <div className="flex flex-wrap items-center gap-3">
                 <Button type="submit" size="lg" className="px-6 py-3" disabled={submitting}>
-                  {submitting ? "Sending..." : "Send Inquiry"}
+                  {submitting ? "Sending..." : "Request Project Review"}
                   <Send className="ml-2 size-4" />
                 </Button>
                 <Link href="mailto:hello@holtzdigital.com" className={buttonVariants({ variant: "outline", size: "lg" })}>
