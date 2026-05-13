@@ -37,7 +37,7 @@ export default function HomeFaqSection() {
   return (
     <section className="relative pt-4 pb-16 sm:pt-8 sm:pb-24">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-10 h-52 w-52 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" />
+        <div className="orb absolute left-1/2 top-10 h-52 w-52 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" />
       </div>
 
       <div className="w-full">

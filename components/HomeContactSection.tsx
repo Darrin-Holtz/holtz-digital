@@ -105,8 +105,8 @@ export default function HomeContactSection() {
   return (
     <section className="relative pt-4 pb-16 sm:pt-8 sm:pb-24" id="contact">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-8 h-56 w-56 -translate-x-1/2 rounded-full bg-primary/20 blur-3xl" />
-        <div className="absolute right-0 bottom-0 h-52 w-52 rounded-full bg-sky-500/10 blur-3xl" />
+        <div className="orb absolute left-1/2 top-8 h-56 w-56 -translate-x-1/2 rounded-full bg-primary/20 blur-3xl" />
+        <div className="orb absolute right-0 bottom-0 h-52 w-52 rounded-full bg-sky-500/10 blur-3xl" />
       </div>
 
       <div className="w-full">

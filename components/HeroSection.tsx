@@ -13,9 +13,9 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden pt-16 sm:pt-20">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-6 h-56 w-56 -translate-x-1/2 rounded-full bg-primary/25 blur-3xl" />
-        <div className="absolute -left-20 bottom-10 h-56 w-56 rounded-full bg-sky-500/15 blur-3xl" />
-        <div className="absolute -right-20 top-20 h-64 w-64 rounded-full bg-indigo-500/10 blur-3xl" />
+        <div className="orb absolute left-1/2 top-6 h-56 w-56 -translate-x-1/2 rounded-full bg-primary/25 blur-3xl" />
+        <div className="orb absolute -left-20 bottom-10 h-56 w-56 rounded-full bg-sky-500/15 blur-3xl" />
+        <div className="orb absolute -right-20 top-20 h-64 w-64 rounded-full bg-indigo-500/10 blur-3xl" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,oklch(0.72_0_0/.06)_1px,transparent_1px),linear-gradient(to_bottom,oklch(0.72_0_0/.06)_1px,transparent_1px)] bg-[size:44px_44px]" />
       </div>
 
