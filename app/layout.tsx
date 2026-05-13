@@ -55,6 +55,9 @@ export const metadata: Metadata = {
     },
   },
   category: "business",
+  verification: {
+    google: "HvbhGdUBsKJloqQEHckyRcBsxxklbGgbzmMKMgzLURo",
+  },
 };
 
 export default function RootLayout({
