@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
     assetPrefix: `https://${codespaceHost}`,
   }),
   experimental: {
+    useLightningcss: true,
     serverActions: {
       bodySizeLimit: "5mb",
       allowedOrigins: [
