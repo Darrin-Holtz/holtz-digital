@@ -101,7 +101,7 @@ export default function HomeAuthenticSection() {
                 key={step.number}
                 className="rounded-2xl border border-border/70 bg-card/70 p-5 backdrop-blur"
               >
-                <span className="text-3xl font-bold tracking-tighter text-primary/30">
+                <span className="text-3xl font-bold tracking-tighter text-primary/60">
                   {step.number}
                 </span>
                 <h4 className="mt-2 font-semibold text-foreground">{step.title}</h4>
