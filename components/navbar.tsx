@@ -1,18 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { ThemeToggle } from "./theme-toggle";
-import { usePathname } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { usePathname, useRouter } from "next/navigation";
 import { SearchInput } from "./SearchInput";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import dynamic from "next/dynamic";
-
-const NavbarAuthButtons = dynamic(
-    () => import("./NavbarAuthButtons").then((m) => m.NavbarAuthButtons),
-    { ssr: false }
-);
 
 const NAV_LINKS = [
     { href: "/about", label: "About" },
@@ -21,8 +17,25 @@ const NAV_LINKS = [
 ];
 
 export function Navbar() {
+    const session = authClient.useSession();
+    const isAuthenticated = Boolean(session.data?.user);
+    const isLoading = session.isPending;
+    const router = useRouter();
     const pathname = usePathname();
     const [mobileOpen, setMobileOpen] = useState(false);
+
+    const handleSignOut = () =>
+        authClient.signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    toast.success("Successfully signed out.");
+                    router.push("/");
+                },
+                onError: (error) => {
+                    toast.error(error.error.message);
+                },
+            },
+        });
 
     return (
         <nav className="w-full">
@@ -54,7 +67,11 @@ export function Navbar() {
                             <SearchInput />
                         </div>
                     )}
-                    <NavbarAuthButtons />
+                    {!isLoading && isAuthenticated && (
+                        <Button className="hidden md:inline-flex" onClick={handleSignOut}>
+                            Logout
+                        </Button>
+                    )}
                     <ThemeToggle />
                     {/* Hamburger — mobile only */}
                     <button
@@ -96,7 +113,17 @@ export function Navbar() {
                         </Link>
                     ))}
 
-                    <NavbarAuthButtons mobile onCloseMobile={() => setMobileOpen(false)} />
+                    {!isLoading && isAuthenticated && (
+                        <button
+                            className="text-white text-2xl font-medium hover:text-blue-400 transition-colors"
+                            onClick={() => {
+                                setMobileOpen(false);
+                                handleSignOut();
+                            }}
+                        >
+                            Logout
+                        </button>
+                    )}
                 </div>
             )}
         </nav>
