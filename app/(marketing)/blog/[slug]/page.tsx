@@ -43,18 +43,39 @@ export async function generateStaticParams() {
   }));
 }
 
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
 
   const post = await getPostBySlug(slug);
 
   if (!post) {
-    return { title: "Post not found | Darrin Holtz" };
+    return { title: "Post not found | Holtz Digital" };
   }
 
+  const description = stripHtml(post.body ?? "").slice(0, 160);
+  const imageUrl = post.imageUrl && post.imageUrl.trim() !== "" ? post.imageUrl : undefined;
+
   return {
-    title: `${post.title} | Darrin Holtz`,
-    description: post.body?.slice(0, 160) ?? "",
+    title: `${post.title} | Holtz Digital`,
+    description,
+    authors: [{ name: "Darrin Holtz" }],
+    openGraph: {
+      title: `${post.title} | Holtz Digital`,
+      description,
+      type: "article",
+      url: `https://holtzdigital.com/blog/${slug}`,
+      ...(imageUrl ? { images: [{ url: imageUrl, alt: post.title }] } : {}),
+    },
+    twitter: {
+      card: imageUrl ? "summary_large_image" : "summary",
+      title: `${post.title} | Holtz Digital`,
+      description,
+      ...(imageUrl ? { images: [imageUrl] } : {}),
+    },
   };
 }
 

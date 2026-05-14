@@ -41,6 +41,7 @@ export default function PostForm({
 
   const form = useForm<FormValues>({
     resolver: zodResolver(postSchema),
+    mode: "onChange",
     defaultValues: {
       title: initialTitle,
       content: initialContent,

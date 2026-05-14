@@ -5,7 +5,6 @@ import { Id } from "@/convex/_generated/dataModel";
 import usePresence from "@convex-dev/presence/react";
 import { useQuery } from "convex/react";
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
 
 const FacePile = dynamic(() => import("@convex-dev/presence/facepile"), {
   ssr: false,
@@ -15,23 +14,9 @@ interface iAppProps {
   roomId: Id<"posts">;
 }
 
-export function PostPresence({ roomId }: iAppProps) {
-  const userId = useQuery(api.presence.getUserId);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Call hooks unconditionally first, then check conditions
-  const roomIdString = String(roomId);
-  const userIdString = userId ? String(userId) : "";
-  const presenceState = usePresence(api.presence, roomIdString, userIdString);
-
-  // Check conditions after all hooks - return early if userId not ready
-  if (!mounted || !userId || userId === undefined || userId === null || !userIdString) {
-    return null;
-  }
+// Inner component — only rendered when userId is a real, loaded value.
+function PostPresenceInner({ roomId, userId }: { roomId: Id<"posts">; userId: string }) {
+  const presenceState = usePresence(api.presence, String(roomId), userId);
 
   if (!presenceState || presenceState.length === 0) {
     return null;
@@ -47,4 +32,15 @@ export function PostPresence({ roomId }: iAppProps) {
       </div>
     </div>
   );
+}
+
+// Outer component — waits for userId before mounting the hook.
+export function PostPresence({ roomId }: iAppProps) {
+  const userId = useQuery(api.presence.getUserId);
+
+  if (!userId) {
+    return null;
+  }
+
+  return <PostPresenceInner roomId={roomId} userId={String(userId)} />;
 }

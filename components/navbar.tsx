@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { usePathname, useRouter } from "next/navigation";
 import { SearchInput } from "./SearchInput";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const NAV_LINKS = [
     { href: "/about", label: "About" },
@@ -23,6 +23,8 @@ export function Navbar() {
     const router = useRouter();
     const pathname = usePathname();
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => setMounted(true), []);
 
     const handleSignOut = () =>
         authClient.signOut({
@@ -67,7 +69,7 @@ export function Navbar() {
                             <SearchInput />
                         </div>
                     )}
-                    {!isLoading && isAuthenticated && (
+                    {mounted && !isLoading && isAuthenticated && (
                         <Button className="hidden md:inline-flex" onClick={handleSignOut}>
                             Logout
                         </Button>
@@ -113,7 +115,7 @@ export function Navbar() {
                         </Link>
                     ))}
 
-                    {!isLoading && isAuthenticated && (
+                    {mounted && !isLoading && isAuthenticated && (
                         <button
                             className="text-white text-2xl font-medium hover:text-blue-400 transition-colors"
                             onClick={() => {

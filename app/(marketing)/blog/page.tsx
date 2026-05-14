@@ -10,9 +10,20 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Blog | Holtz Digital",
-  description: "Read the latest articles and insights from Holtz Digital.",
+  description: "Insights, lessons, and trends from our work building websites for small businesses.",
   category: "Web development",
   authors: [{ name: "Darrin Holtz" }],
+  openGraph: {
+    title: "Blog | Holtz Digital",
+    description: "Insights, lessons, and trends from our work building websites for small businesses.",
+    type: "website",
+    url: "https://holtzdigital.com/blog",
+  },
+  twitter: {
+    card: "summary",
+    title: "Blog | Holtz Digital",
+    description: "Insights, lessons, and trends from our work building websites for small businesses.",
+  },
 };
 
 export const revalidate = 900;

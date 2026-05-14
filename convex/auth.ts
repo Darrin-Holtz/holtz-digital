@@ -8,12 +8,21 @@ import authConfig from "./auth.config";
 export const authComponent = createClient<DataModel>(components.betterAuth);
 
 export const createAuth = (ctx: GenericCtx<DataModel>) => {
+  const isDevMode = !!process.env.DEV_ORIGIN;
+
   return betterAuth({
-    baseURL: "https://holtz-digital.vercel.app/",
+    baseURL: "https://holtzdigital.com",
 
     trustedOrigins: [
+      "https://holtzdigital.com",
       "https://holtz-digital.vercel.app",
+      "*.app.github.dev",
+      ...(process.env.DEV_ORIGIN ? [process.env.DEV_ORIGIN] : []),
     ],
+
+    advanced: {
+      disableCSRFCheck: isDevMode,
+    },
 
     database: authComponent.adapter(ctx),
 
