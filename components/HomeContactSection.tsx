@@ -89,14 +89,14 @@ export default function HomeContactSection() {
         body: JSON.stringify({ name, email, projectType, budget, details }),
       });
       if (!res.ok) throw new Error();
-      toast.success("Inquiry sent! I'll be in touch shortly.");
+      toast.success("Inquiry sent! We'll be in touch shortly.");
       setName("");
       setEmail("");
       setProjectType(PROJECT_TYPES[0]);
       setBudget(BUDGET_RANGES[1]);
       setDetails("");
     } catch {
-      toast.error("Something went wrong. Please try again or email me directly.");
+      toast.error("Something went wrong. Please try again or email us directly.");
     } finally {
       setSubmitting(false);
     }

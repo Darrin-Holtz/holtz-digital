@@ -68,7 +68,7 @@ const webDesignSchema = {
           name: "Do you handle hosting?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Yes. I can recommend the right hosting provider, configure the environment, and handle deployment so the site is stable from day one.",
+            text: "Yes. Holtz Digital can recommend the right hosting provider, configure the environment, and handle deployment so the site is stable from day one.",
           },
         },
         {
@@ -84,7 +84,7 @@ const webDesignSchema = {
           name: "Do you handle the domain?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "I can guide domain setup, DNS configuration, and domain connection. If you already own a domain, I can connect it to your new site.",
+            text: "Holtz Digital can guide domain setup, DNS configuration, and domain connection. If you already own a domain, we can connect it to your new site.",
           },
         },
       ],
@@ -153,7 +153,7 @@ const differentiators = [
   },
   {
     title: "Direct collaboration",
-    body: "You work directly with me, so communication stays clear and decisions happen quickly.",
+    body: "You work directly with Holtz Digital, so communication stays clear and decisions happen quickly.",
   },
 ];
 
@@ -194,7 +194,7 @@ const faqs = [
   {
     question: "Do you handle hosting?",
     answer:
-      "Yes. I can recommend the right hosting provider, configure the environment, and handle deployment so the site is stable from day one.",
+      "Yes. Holtz Digital can recommend the right hosting provider, configure the environment, and handle deployment so the site is stable from day one.",
   },
   {
     question: "Is the website mine after completion?",
@@ -204,7 +204,7 @@ const faqs = [
   {
     question: "Do you handle the domain?",
     answer:
-      "I can guide domain setup, DNS configuration, and domain connection. If you already own a domain, I can connect it to your new site.",
+      "Holtz Digital can guide domain setup, DNS configuration, and domain connection. If you already own a domain, we can connect it to your new site.",
   },
 ];
 
@@ -311,7 +311,7 @@ export default function WebDesignPage() {
             </p>
 
             <h1 className="mt-6 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-              Why should you trust me to design your website?
+              Why should you trust Holtz Digital to design your website?
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
@@ -320,7 +320,7 @@ export default function WebDesignPage() {
             </p>
 
             <p className="mt-4 max-w-2xl text-base leading-8 text-muted-foreground">
-              My process is straightforward: I define the scope, build in milestones, and keep the implementation
+              Our process is straightforward: we define the scope, build in milestones, and keep the implementation
               clean so your site is easier to maintain after launch.
             </p>
 
@@ -332,7 +332,7 @@ export default function WebDesignPage() {
                 href="/about"
                 className={cn(buttonVariants({ variant: "outline", size: "lg" }), "group")}
               >
-                Learn About How I Work
+                Learn About How We Work
                 <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
             </div>
@@ -376,7 +376,7 @@ export default function WebDesignPage() {
               Clear deliverables so pricing makes sense.
             </h2>
             <p className="mt-4 text-base leading-8 text-muted-foreground">
-              This is the baseline scope I use so there is no confusion about what you are paying for.
+              This is the baseline scope we use so there is no confusion about what you are paying for.
             </p>
           </div>
 
@@ -413,7 +413,7 @@ export default function WebDesignPage() {
 
       <section className="pt-16">
         <div className="w-full">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Why choose me</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Why choose Holtz Digital</p>
           <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
             What makes Holtz Digital different from typical agencies
           </h2>
@@ -436,7 +436,7 @@ export default function WebDesignPage() {
         <div className="w-full">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Website strategy</p>
           <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-            I design websites tailored to how your business makes money.
+            We design websites tailored to how your business makes money.
           </h2>
           <p className="mt-4 text-base leading-8 text-muted-foreground">
             Most local businesses do not need full ecommerce. The right build depends on your revenue model,
@@ -480,7 +480,7 @@ export default function WebDesignPage() {
             Starting rates and packages
           </h2>
           <p className="mt-4 text-base leading-8 text-muted-foreground">
-            You do not need a custom quote just to get a baseline. These starting points help filter fit before I scope details.
+            You do not need a custom quote just to get a baseline. These starting points help filter fit before we scope details.
           </p>
         </div>
 

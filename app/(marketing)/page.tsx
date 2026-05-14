@@ -110,7 +110,7 @@ const homepageSchema = {
           name: "Can you redesign my existing site instead of building from scratch?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Absolutely. I can modernize your current site, improve speed and UX, and keep what is working while removing friction points.",
+            text: "Absolutely. Holtz Digital can modernize your current site, improve speed and UX, and keep what is working while removing friction points.",
           },
         },
         {
@@ -118,7 +118,7 @@ const homepageSchema = {
           name: "Will my site be easy to update after launch?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Yes. I build with maintainability in mind so you can update content and basic sections without fighting your codebase.",
+            text: "Yes. We build with maintainability in mind so you can update content and basic sections without fighting your codebase.",
           },
         },
         {
@@ -126,7 +126,7 @@ const homepageSchema = {
           name: "Do you provide ongoing support after launch?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Yes. I offer ongoing updates, maintenance, and optimization support so your website stays healthy as your business grows.",
+            text: "Yes. We offer ongoing updates, maintenance, and optimization support so your website stays healthy as your business grows.",
           },
         },
         {
@@ -134,7 +134,7 @@ const homepageSchema = {
           name: "How do I get started?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Start with a quick discovery call. I will define your goals, target audience, and the pages you need, then map out a clear build plan.",
+            text: "Start with a quick discovery call. We will define your goals, target audience, and the pages you need, then map out a clear build plan.",
           },
         },
       ],

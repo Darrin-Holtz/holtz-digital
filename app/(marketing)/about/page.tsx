@@ -71,7 +71,7 @@ const principles = [
   {
     title: "Built From Scratch",
     description:
-      "Whether a project is built in HTML, Next.js, WordPress, or another stack, I build from scratch with a focus on clean structure, maintainability, and performance.",
+      "Whether a project is built in HTML, Next.js, WordPress, or another stack, Holtz Digital builds from scratch with a focus on clean structure, maintainability, and performance.",
     icon: Code2,
   },
   {
@@ -83,7 +83,7 @@ const principles = [
   {
     title: "Practical Support",
     description:
-      "The goal is not just launch day. I want your site to stay easy to update, easy to understand, and useful to your business over time.",
+      "The goal is not just launch day. We want your site to stay easy to update, easy to understand, and useful to your business over time.",
     icon: Wrench,
   },
 ];
@@ -98,17 +98,17 @@ const process = [
 const proofPoints = [
   {
     title: "Buffalo Focus",
-    body: "The positioning is local on purpose. I want the site to speak clearly to businesses in Buffalo and Western New York, not read like a generic agency template.",
+    body: "The positioning is local on purpose. We want the site to speak clearly to businesses in Buffalo and Western New York, not read like a generic agency template.",
     icon: MapPin,
   },
   {
     title: "Public Technical Work",
-    body: "I can back up the technical side with real code, real builds, and a working process instead of hiding everything behind vague claims.",
+    body: "Holtz Digital can back up the technical side with real code, real builds, and a working process instead of hiding everything behind vague claims.",
     icon: GitBranch,
   },
   {
     title: "Writing That Explains the Work",
-    body: "The blog is part of the trust signal. It gives you a way to see how I think about structure, SEO, and website improvements before you ever reach out.",
+    body: "The blog is part of the trust signal. It gives you a way to see how we think about structure, SEO, and website improvements before you ever reach out.",
     icon: NotebookPen,
   },
 ];
@@ -146,13 +146,13 @@ export default function AboutPage() {
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-              I build websites for Buffalo businesses that need more than a prettier homepage. The work is centered on
+              Holtz Digital builds websites for Buffalo businesses that need more than a prettier homepage. Our work is centered on
               clear messaging, fast performance, the right keyword strategy, and a site that actually supports lead generation.
             </p>
 
             <p className="mt-4 max-w-2xl text-base leading-8 text-muted-foreground">
-              Every website I build is from scratch, whether it is powered by HTML, Next.js, WordPress, or another modern stack.
-              I care a lot about what sits underneath the design because clean structure, maintainable code, and a site you can keep using without fighting it later all matter.
+              Every website we build is from scratch, whether it is powered by HTML, Next.js, WordPress, or another modern stack.
+              We care a lot about what sits underneath the design because clean structure, maintainable code, and a site you can keep using without fighting it later all matter.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -214,7 +214,7 @@ export default function AboutPage() {
 
       <section className="grid gap-6 pt-16 lg:grid-cols-[.9fr_1.1fr] lg:items-start">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Why I do this work</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Why we do this work</p>
           <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
             Too many small business websites are hard to trust, hard to update, or hard to find.
           </h2>
@@ -228,7 +228,7 @@ export default function AboutPage() {
             That is the approach behind Holtz Digital. Keep the message clear. Keep the build clean. Remove friction where it hurts trust and conversions.
           </p>
           <p>
-            If WordPress is the right platform, I build it from scratch. If HTML or Next.js is the right fit, I can build there too. The point is choosing the right stack for the job and building it cleanly from the start.
+            If WordPress is the right platform, Holtz Digital builds it from scratch. If HTML or Next.js is the right fit, we can build there too. The point is choosing the right stack for the job and building it cleanly from the start.
           </p>
         </div>
       </section>
@@ -277,7 +277,7 @@ export default function AboutPage() {
 
           <Card className="border-border/70 bg-card/80 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-2xl">What you can expect from me</CardTitle>
+              <CardTitle className="text-2xl">What you can expect from Holtz Digital</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 text-sm leading-8 text-muted-foreground">
               <p>
@@ -325,7 +325,7 @@ export default function AboutPage() {
             If you want a site that is clearer, faster, and easier to trust, let&apos;s talk.
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-8 text-muted-foreground">
-            The best place to start is a focused project conversation. I can talk with you about where your current site is falling short,
+            The best place to start is a focused project conversation. We can talk with you about where your current site is falling short,
             what you need from a rebuild, which keywords matter most, and whether HTML, Next.js, WordPress, or another stack makes the most sense for the business.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
