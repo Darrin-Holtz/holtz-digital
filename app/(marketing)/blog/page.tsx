@@ -56,7 +56,7 @@ export default async function BlogPage() {
             <div className="relative h-48 w-full overflow-hidden">
               <Image
                 src={post.imageUrl ?? "https://images.unsplash.com/photo-1773754532196-014342510e64?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8"}
-                alt="image"
+                alt={post.title}
                 loading="eager"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -68,9 +68,9 @@ export default async function BlogPage() {
               <div className="text-red-500 text-sm">
               </div>
               <Link href={`/blog/${post.slug}`}>
-                <h1 className="text-2xl font-bold hover:text-primary">
+                <h2 className="text-2xl font-bold hover:text-primary">
                   {post.title}
-                </h1>
+                </h2>
               </Link>
               <p className="text-muted-foreground line-clamp-3">{toTextExcerpt(post.body)}</p>
             </CardContent>

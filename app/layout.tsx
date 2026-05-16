@@ -3,6 +3,9 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
+import Script from "next/script";
+
+const GA_ID = "G-9V846TD4LL";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://holtzdigital.com"),
@@ -72,6 +75,18 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
         <Providers>
           <main className="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-8">
             {children}

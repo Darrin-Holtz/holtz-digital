@@ -49,7 +49,13 @@ const aboutSchema = {
         addressRegion: "NY",
         addressCountry: "US",
       },
-      sameAs: ["https://github.com/Darrin-Holtz"],
+      sameAs: [
+        "https://github.com/Darrin-Holtz",
+        "https://www.linkedin.com/in/darrin-holtz-a6909a2b1/",
+        "https://www.facebook.com/Darrin.Holtz/",
+        "https://www.instagram.com/akadarrinholtz/",
+        "https://www.youtube.com/@DarrinHoltz",
+      ],
       worksFor: {
         "@id": "https://holtzdigital.com/#organization",
       },

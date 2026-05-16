@@ -1,7 +1,7 @@
 import { api } from "@/convex/_generated/api";
 import { fetchMutation } from "convex/nextjs";
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 import { inquirySchema } from "@/app/schemas/inquiry";
 
 export async function POST(request: Request) {
@@ -26,13 +26,21 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: "Failed to save inquiry" }, { status: 500 });
     }
 
-    const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) {
-        console.warn("[inquiry] RESEND_API_KEY not set — skipping email");
+    const smtpUser = process.env.ZOHO_SMTP_USER;
+    const smtpPass = process.env.ZOHO_SMTP_PASS;
+
+    if (!smtpUser || !smtpPass) {
+        console.warn("[inquiry] ZOHO_SMTP_USER or ZOHO_SMTP_PASS not set — skipping email");
     } else {
-        const resend = new Resend(apiKey);
-        const emailResult = await resend.emails.send({
-            from: "Holtz Digital <onboarding@resend.dev>",
+        const transporter = nodemailer.createTransport({
+            host: "smtp.zoho.com",
+            port: 465,
+            secure: true,
+            auth: { user: smtpUser, pass: smtpPass },
+        });
+
+        const mailResult = await transporter.sendMail({
+            from: `"Holtz Digital" <${smtpUser}>`,
             to: "darrinholtz@gmail.com",
             replyTo: email,
             subject: `New project inquiry from ${name}`,
@@ -45,9 +53,13 @@ export async function POST(request: Request) {
                 `Project Details:`,
                 details,
             ].join("\n"),
+        }).catch((err: unknown) => {
+            console.error("[inquiry] SMTP error:", err);
+            return null;
         });
-        if (emailResult.error) {
-            console.error("[inquiry] Resend error:", emailResult.error);
+
+        if (!mailResult) {
+            console.error("[inquiry] Email failed to send");
         }
     }
 

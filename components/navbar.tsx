@@ -44,10 +44,10 @@ export function Navbar() {
             {/* Desktop / top bar */}
             <div className="py-5 flex items-center justify-between">
                 <div className="flex items-center gap-8">
-                    <Link href="/" onClick={() => setMobileOpen(false)}>
-                        <h1 className="text-3xl font-bold">
+                    <Link href="/" onClick={() => setMobileOpen(false)} aria-label="Holtz Digital – Home">
+                        <span className="text-3xl font-bold">
                             Holtz<span className="text-blue-500">Digital</span>
-                        </h1>
+                        </span>
                     </Link>
                     {/* Desktop links */}
                     <div className="hidden md:flex items-center gap-2">
