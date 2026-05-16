@@ -57,7 +57,7 @@ const socialLinks = [
   },
   {
     label: "Email",
-    href: "mailto:hello@holtzdigital.com",
+    href: "mailto:support@holtzdigital.com",
     icon: Mail,
   },
 ];

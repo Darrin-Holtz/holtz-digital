@@ -41,7 +41,7 @@ export async function POST(request: Request) {
 
         const mailResult = await transporter.sendMail({
             from: `"Holtz Digital" <${smtpUser}>`,
-            to: "darrinholtz@gmail.com",
+            to: "support@holtzdigital.com",
             replyTo: email,
             subject: `New project inquiry from ${name}`,
             text: [

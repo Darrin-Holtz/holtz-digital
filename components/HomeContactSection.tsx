@@ -196,7 +196,7 @@ export default function HomeContactSection() {
                   {submitting ? "Sending..." : "Request Project Review"}
                   <Send className="ml-2 size-4" />
                 </Button>
-                <Link href="mailto:hello@holtzdigital.com" className={buttonVariants({ variant: "outline", size: "lg" })}>
+                <Link href="mailto:support@holtzdigital.com" className={buttonVariants({ variant: "outline", size: "lg" })}>
                   Prefer email directly
                 </Link>
               </div>
