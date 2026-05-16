@@ -14,9 +14,6 @@ export const heartbeat = mutation({
     interval: v.number(),
   },
   handler: async (ctx, { roomId, userId, sessionId, interval }) => {
-    if (!userId || userId.trim() === "") {
-      return;
-    }
     return await presence.heartbeat(ctx, roomId, userId, sessionId, interval);
   },
 });
