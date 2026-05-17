@@ -124,13 +124,17 @@ export const generateAndPublishPost = internalAction({
     topic: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
-    const openaiKey = process.env.OPENAI_API_KEY;
+    const geminiKey = process.env.GEMINI_API_KEY;
     const pexelsKey = process.env.PEXELS_API_KEY;
 
-    if (!openaiKey) throw new Error("OPENAI_API_KEY is not set in Convex environment variables");
+    if (!geminiKey) throw new Error("GEMINI_API_KEY is not set in Convex environment variables");
     if (!pexelsKey) throw new Error("PEXELS_API_KEY is not set in Convex environment variables");
 
-    const openai = new OpenAI({ apiKey: openaiKey });
+    // Use Gemini 2.5 Pro via Google's OpenAI-compatible endpoint
+    const openai = new OpenAI({
+      apiKey: geminiKey,
+      baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
+    });
 
     // Pick topic — use provided one or cycle deterministically by week
     const topic =
@@ -193,7 +197,7 @@ ${internalLinksContext}
 Return only the JSON object.`;
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-5.4",
+      model: "gemini-2.5-pro",
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt },
