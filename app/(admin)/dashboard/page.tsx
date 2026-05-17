@@ -1,6 +1,6 @@
 import { DashboardCard } from "@/components/admin/DashboardCard";
 import PostsTable from "@/components/admin/PostsTable";
-import { GeneratePostButton } from "@/components/admin/GeneratePostButton";
+import GeneratePostButton from "@/components/admin/GeneratePostButton";
 import { api } from "@/convex/_generated/api";
 import { fetchQuery } from "convex/nextjs";
 import { MessageCircle, Newspaper, User, Inbox } from "lucide-react";
