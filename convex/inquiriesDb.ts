@@ -1,5 +1,7 @@
 import { v } from "convex/values";
 import { internalMutation, mutation, query } from "./_generated/server";
+import { authComponent } from "./auth";
+import { ConvexError } from "convex/values";
 
 export const save = mutation({
     args: {
@@ -24,9 +26,11 @@ export const list = query({
     },
 });
 
-export const markRead = internalMutation({
+export const markRead = mutation({
     args: { id: v.id("inquiries") },
     handler: async (ctx, args) => {
+        const user = await authComponent.safeGetAuthUser(ctx);
+        if (!user) throw new ConvexError("Unauthorized");
         await ctx.db.patch(args.id, { status: "read" });
     },
 });

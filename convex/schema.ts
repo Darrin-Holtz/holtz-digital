@@ -35,6 +35,7 @@ export default defineSchema({
         postsCount: v.number(),
         usersCount: v.number(),
         commentsCount: v.number(),
+        inquiriesCount: v.optional(v.number()),
     }).index("by_key", ["key"]),
     inquiries: defineTable({
         name: v.string(),

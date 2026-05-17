@@ -33,10 +33,16 @@ export const getDashboardStats = query({
         }
       }
 
+    let inquiriesCount = 0;
+      for await (const inquiry of ctx.db.query("inquiries")) {
+        if (inquiry) inquiriesCount += 1;
+      }
+
       return {
         postsCount,
         usersCount,
         commentsCount,
+        inquiriesCount,
       };
     }
 
@@ -44,6 +50,7 @@ export const getDashboardStats = query({
       postsCount: stats.postsCount,
       usersCount: stats.usersCount,
       commentsCount: stats.commentsCount,
+      inquiriesCount: stats.inquiriesCount ?? 0,
     };
   },
 });
