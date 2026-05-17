@@ -51,7 +51,10 @@ export default function LeadsPage() {
                     <td className="px-4 py-3">{inquiry.name}</td>
                     <td className="px-4 py-3">
                       <a
-                        href={`mailto:${inquiry.email}`}
+                        href={`https://mail.zoho.com/zm/#mail/compose?to=${encodeURIComponent(inquiry.email)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
                         className="text-blue-500 hover:underline"
                       >
                         {inquiry.email}
