@@ -8,7 +8,10 @@ export default defineSchema({
         authorId: v.string(),
         slug: v.string(),
         imageStorageId: v.optional(v.id("_storage")),
+        status: v.optional(v.string()), // "published" | "draft" — undefined treated as published
+        isAiGenerated: v.optional(v.boolean()),
     }).index("by_slug", ["slug"])
+        .index("by_status", ["status"])
         .searchIndex("search_title", {
             searchField: "title",
         })

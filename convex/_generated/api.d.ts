@@ -9,9 +9,11 @@
  */
 
 import type * as auth from "../auth.js";
+import type * as blogAutomation from "../blogAutomation.js";
+import type * as blogInternalQueries from "../blogInternalQueries.js";
 import type * as comments from "../comments.js";
+import type * as crons from "../crons.js";
 import type * as http from "../http.js";
-import type * as inquiries from "../inquiries.js";
 import type * as inquiriesDb from "../inquiriesDb.js";
 import type * as posts from "../posts.js";
 import type * as presence from "../presence.js";
@@ -26,9 +28,11 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  blogAutomation: typeof blogAutomation;
+  blogInternalQueries: typeof blogInternalQueries;
   comments: typeof comments;
+  crons: typeof crons;
   http: typeof http;
-  inquiries: typeof inquiries;
   inquiriesDb: typeof inquiriesDb;
   posts: typeof posts;
   presence: typeof presence;

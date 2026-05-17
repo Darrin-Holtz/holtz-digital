@@ -1,4 +1,4 @@
-import { mutation, query } from "./_generated/server";
+import { internalMutation, mutation, query } from "./_generated/server";
 import { ConvexError, v } from "convex/values";
 import { authComponent } from "./auth";
 import { Doc, Id } from "./_generated/dataModel";
@@ -36,20 +36,76 @@ export const getPosts = query({
   args: {},
   handler: async (ctx) => {
     const posts = await ctx.db.query("posts").order('desc').collect();
+    const published = posts.filter((p) => !p.status || p.status === "published");
 
     return await Promise.all(
-      posts.map(async (post) => {
-        const resolvedImageUrl = 
+      published.map(async (post) => {
+        const resolvedImageUrl =
           post.imageStorageId !== undefined ? await ctx.storage.getUrl(post.imageStorageId) : null;
-    
+
         return {
           ...post,
           imageUrl: resolvedImageUrl,
         };
       })
     );
-  }
-})
+  },
+});
+
+export const getPostsAdmin = query({
+  args: {},
+  handler: async (ctx) => {
+    const posts = await ctx.db.query("posts").order("desc").collect();
+
+    return await Promise.all(
+      posts.map(async (post) => {
+        const resolvedImageUrl =
+          post.imageStorageId !== undefined ? await ctx.storage.getUrl(post.imageStorageId) : null;
+
+        return {
+          ...post,
+          imageUrl: resolvedImageUrl,
+        };
+      })
+    );
+  },
+});
+
+// Internal mutation used by the AI blog automation pipeline
+export const saveAiPost = internalMutation({
+  args: {
+    title: v.string(),
+    body: v.string(),
+    slug: v.string(),
+    imageStorageId: v.optional(v.id("_storage")),
+  },
+  handler: async (ctx, args) => {
+    await ctx.db.insert("posts", {
+      title: args.title,
+      body: args.body,
+      authorId: "ai-generated",
+      slug: args.slug,
+      imageStorageId: args.imageStorageId,
+      status: "published",
+      isAiGenerated: true,
+    });
+
+    await ctx.runMutation(internal.stats.bumpCounts, { postsDelta: 1 });
+  },
+});
+
+// Mutation that lets an admin trigger AI post generation on demand
+export const scheduleAiPost = mutation({
+  args: { topic: v.optional(v.string()) },
+  handler: async (ctx, args) => {
+    const user = await authComponent.safeGetAuthUser(ctx);
+    if (!user) throw new ConvexError("Unauthorized");
+
+    await ctx.scheduler.runAfter(0, internal.blogAutomation.generateAndPublishPost, {
+      topic: args.topic,
+    });
+  },
+});
 
 export const getPostBySlug = query({
   args: { slug: v.string() },

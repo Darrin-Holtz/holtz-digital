@@ -8,6 +8,8 @@ interface PostRow {
     authorId: string;
     _creationTime: number;
   slug?: string;
+  status?: string;
+  isAiGenerated?: boolean;
 }
 
 interface PostsTableProps {
@@ -41,8 +43,24 @@ const PostsTable = ({ posts, limit, title }: PostsTableProps) => {
             </TableRow>
           ) : shownPosts.map((post) => (
             <TableRow key={post._id}>
-              <TableCell>{post.title}</TableCell>
-              <TableCell className='hidden md:table-cell'>{post.authorId}</TableCell>
+              <TableCell>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span>{post.title}</span>
+                  {post.isAiGenerated && (
+                    <span className="text-xs bg-violet-100 text-violet-700 dark:bg-violet-900 dark:text-violet-300 px-2 py-0.5 rounded-full font-medium">
+                      AI
+                    </span>
+                  )}
+                  {post.status === 'draft' && (
+                    <span className="text-xs bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300 px-2 py-0.5 rounded-full font-medium">
+                      Draft
+                    </span>
+                  )}
+                </div>
+              </TableCell>
+              <TableCell className='hidden md:table-cell'>
+                {post.authorId === 'ai-generated' ? '🤖 AI' : post.authorId}
+              </TableCell>
               <TableCell className='hidden md:table-cell text-right'>
                 {new Date(post._creationTime).toLocaleDateString()}
               </TableCell>
