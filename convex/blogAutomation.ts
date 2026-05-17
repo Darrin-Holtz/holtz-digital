@@ -203,7 +203,7 @@ Return only the JSON object.`;
         { role: "user", content: userPrompt },
       ],
       response_format: { type: "json_object" },
-      max_tokens: 6000,
+      max_tokens: 10000,
       temperature: 0.7,
     });
 
