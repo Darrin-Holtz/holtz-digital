@@ -24,7 +24,12 @@ export default async function DashboardPage() {
         <DashboardCard title="Users" count={stats.usersCount} icon={<User className="text-slate-500" size={72} />} />
         <DashboardCard title="Comments" count={stats.commentsCount} icon={<MessageCircle className="text-slate-500" size={72} />} />
         <Link href="/dashboard/leads" className="block hover:opacity-90 transition-opacity">
-          <DashboardCard title="Leads" count={stats.inquiriesCount} icon={<Inbox className="text-slate-500" size={72} />} />
+          <DashboardCard
+            title="Leads"
+            count={stats.newInquiriesCount}
+            icon={<Inbox className="size-[72px]" />}
+            highlight={stats.newInquiriesCount > 0}
+          />
         </Link>
       </div>
       <div className="flex items-center justify-between mb-4">
