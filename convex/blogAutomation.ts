@@ -197,7 +197,7 @@ ${internalLinksContext}
 Return only the JSON object.`;
 
     const completion = await openai.chat.completions.create({
-      model: "gemini-2.5-pro",
+      model: "gemini-2.5-flash",
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt },
