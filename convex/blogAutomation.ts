@@ -136,10 +136,20 @@ export const generateAndPublishPost = internalAction({
       baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
     });
 
-    // Pick topic — use provided one or cycle deterministically by week
+    // Pick topic — use provided one, or find the first TOPICS entry not yet published
+    const existingTitles = (await ctx.runQuery(
+      internal.blogInternalQueries.getAllPostTitles,
+      {}
+    )) as string[];
+
     const topic =
       args.topic ??
       (() => {
+        const unused = TOPICS.find(
+          (t) => !existingTitles.includes(t.toLowerCase().trim())
+        );
+        // If all topics are exhausted, fall back to week-based cycling
+        if (unused) return unused;
         const weekIndex = Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000));
         return TOPICS[weekIndex % TOPICS.length];
       })();

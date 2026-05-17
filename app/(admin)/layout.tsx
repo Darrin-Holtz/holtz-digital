@@ -35,9 +35,11 @@ async function AdminLayoutContent({
   }
 
   return (
-    <>
+    <div className="flex h-screen overflow-hidden">
       <AdminNavbar />
-      <ConvexClientProvider>{children}</ConvexClientProvider>
-    </>
+      <main className="flex-1 overflow-y-auto p-6">
+        <ConvexClientProvider>{children}</ConvexClientProvider>
+      </main>
+    </div>
   );
 }

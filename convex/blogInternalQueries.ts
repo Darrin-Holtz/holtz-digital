@@ -22,3 +22,12 @@ export const getAllAiPosts = internalQuery({
       .map((p) => ({ _id: p._id, body: p.body }));
   },
 });
+
+// Returns all existing post titles so the automation can skip already-used topics
+export const getAllPostTitles = internalQuery({
+  args: {},
+  handler: async (ctx) => {
+    const posts = await ctx.db.query("posts").collect();
+    return posts.map((p) => p.title.toLowerCase().trim());
+  },
+});

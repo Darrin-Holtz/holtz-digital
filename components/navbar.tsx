@@ -9,6 +9,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { SearchInput } from "./SearchInput";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { LayoutDashboard } from "lucide-react";
 
 const NAV_LINKS = [
     { href: "/about", label: "About" },
@@ -25,6 +28,9 @@ export function Navbar() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
     useEffect(() => setMounted(true), []);
+
+    const profile = useQuery(api.profiles.getCurrentProfile);
+    const isAdmin = profile?.role === "admin";
 
     const handleSignOut = () =>
         authClient.signOut({
@@ -60,6 +66,15 @@ export function Navbar() {
                                 {label}
                             </Link>
                         ))}
+                        {mounted && isAdmin && (
+                            <Link
+                                className={buttonVariants({ variant: "ghost" })}
+                                href="/dashboard"
+                            >
+                                <LayoutDashboard className="size-4 mr-1" />
+                                Dashboard
+                            </Link>
+                        )}
                     </div>
                 </div>
 
@@ -114,6 +129,16 @@ export function Navbar() {
                             {label}
                         </Link>
                     ))}
+
+                    {mounted && isAdmin && (
+                        <Link
+                            href="/dashboard"
+                            className="text-white text-2xl font-medium hover:text-blue-400 transition-colors"
+                            onClick={() => setMobileOpen(false)}
+                        >
+                            Dashboard
+                        </Link>
+                    )}
 
                     {mounted && !isLoading && isAuthenticated && (
                         <button
