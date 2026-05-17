@@ -237,8 +237,11 @@ Return only the JSON object.`;
       let replacement: string;
       if (photo) {
         const storageId = await downloadAndUploadImage(ctx, photo.src.large);
-        const siteUrl = process.env.NEXT_PUBLIC_CONVEX_SITE_URL ?? "";
-        const imgSrc = storageId ? `${siteUrl}/api/storage/${storageId}` : photo.src.large;
+        // Use ctx.storage.getUrl() to get the proper URL — avoids relying on
+        // Next.js env vars which are not available inside Convex actions
+        const imgSrc = storageId
+          ? (await ctx.storage.getUrl(storageId as any)) ?? photo.src.large
+          : photo.src.large;
         const alt = photo.alt || keyword;
         const credit = `Photo by <a href="${photo.photographer_url}" target="_blank" rel="noopener noreferrer">${photo.photographer}</a> on <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a>`;
 
@@ -253,11 +256,16 @@ Return only the JSON object.`;
     // ── Save to database ─────────────────────────────────────────────────────
     const slug = toSlug(title, Date.now().toString(36));
 
+    const imageCredit = heroPhoto
+      ? `Photo by <a href="${heroPhoto.photographer_url}" target="_blank" rel="noopener noreferrer">${heroPhoto.photographer}</a> on <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer">Pexels</a>`
+      : undefined;
+
     await ctx.runMutation(internal.posts.saveAiPost, {
       title,
       body: processedBody,
       slug,
       imageStorageId: heroStorageId as any,
+      imageCredit,
     });
   },
 });

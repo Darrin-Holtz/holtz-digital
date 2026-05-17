@@ -101,8 +101,16 @@ export default async function PostSlugRoute({ params }: PageProps) {
         Back to Blog
       </Link>
 
-      <div className="relative w-full h-[400px] mb-8 rounded-xl overflow-hidden">
-        <Image src={imageSrc} alt={post.title} fill className="object-cover" />
+      <div className="mb-8">
+        <div className="relative w-full h-[400px] rounded-xl overflow-hidden">
+          <Image src={imageSrc} alt={post.title} fill className="object-cover" />
+        </div>
+        {post.imageCredit && (
+          <p
+            className="text-xs text-muted-foreground mt-2 text-right"
+            dangerouslySetInnerHTML={{ __html: post.imageCredit }}
+          />
+        )}
       </div>
 
       <h1 className="text-4xl font-bold">{post.title}</h1>

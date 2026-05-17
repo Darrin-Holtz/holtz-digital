@@ -78,6 +78,7 @@ export const saveAiPost = internalMutation({
     body: v.string(),
     slug: v.string(),
     imageStorageId: v.optional(v.id("_storage")),
+    imageCredit: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     await ctx.db.insert("posts", {
@@ -86,6 +87,7 @@ export const saveAiPost = internalMutation({
       authorId: "ai-generated",
       slug: args.slug,
       imageStorageId: args.imageStorageId,
+      imageCredit: args.imageCredit,
       status: "published",
       isAiGenerated: true,
     });

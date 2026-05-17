@@ -8,6 +8,7 @@ export default defineSchema({
         authorId: v.string(),
         slug: v.string(),
         imageStorageId: v.optional(v.id("_storage")),
+        imageCredit: v.optional(v.string()), // HTML credit string for hero image
         status: v.optional(v.string()), // "published" | "draft" — undefined treated as published
         isAiGenerated: v.optional(v.boolean()),
     }).index("by_slug", ["slug"])
