@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import Script from "next/script";
+import { ConvexClientProvider } from "@/app/ConvexClientProvider";
 
 const GA_ID = "G-9V846TD4LL";
 
@@ -87,12 +88,14 @@ export default function RootLayout({
             gtag('config', '${GA_ID}');
           `}
         </Script>
-        <Providers>
-          <main className="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-8">
-            {children}
-          </main>
-          <Toaster closeButton />
-        </Providers>
+        <ConvexClientProvider>
+          <Providers>
+            <main className="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-8">
+              {children}
+            </main>
+            <Toaster closeButton />
+          </Providers>
+        </ConvexClientProvider>
       </body>
     </html>
   );
