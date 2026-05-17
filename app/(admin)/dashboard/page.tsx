@@ -28,9 +28,10 @@ export default async function DashboardPage() {
         <Link href="/dashboard/leads" className="block hover:opacity-90 transition-opacity">
           <DashboardCard
             title="Leads"
-            count={stats.newInquiriesCount}
+            count={stats.inquiriesCount}
             icon={<Inbox className="size-[72px]" />}
             highlight={stats.newInquiriesCount > 0}
+            badge={stats.newInquiriesCount > 0 ? `${stats.newInquiriesCount} new` : undefined}
           />
         </Link>
       </div>

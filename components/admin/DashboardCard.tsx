@@ -7,9 +7,10 @@ interface DashboardCardProps {
   count: number;
   icon: React.ReactElement<LucideIcon>;
   highlight?: boolean;
+  badge?: string;
 }
 
-export const DashboardCard = ({ title, count, icon, highlight }: DashboardCardProps) => {
+export const DashboardCard = ({ title, count, icon, highlight, badge }: DashboardCardProps) => {
   return (
     <Card className={cn(
       "p-4 transition-colors",
@@ -36,7 +37,7 @@ export const DashboardCard = ({ title, count, icon, highlight }: DashboardCardPr
           </h3>
         </div>
         {highlight && (
-          <p className="text-center text-xs text-blue-500 mt-2 font-medium">New</p>
+          <p className="text-center text-xs text-blue-500 mt-2 font-medium">{badge ?? "New"}</p>
         )}
       </CardContent>
     </Card>

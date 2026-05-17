@@ -11,9 +11,10 @@ export const getDashboardStats = query({
       .withIndex("by_key", (q) => q.eq("key", DASHBOARD_KEY))
       .unique();
 
-    // Always count new inquiries directly — not cached, so it's always accurate
+    // Always count inquiries directly — not cached, so it's always accurate
     const allInquiries = await ctx.db.query("inquiries").collect();
     const newInquiriesCount = allInquiries.filter((i) => i.status === "new").length;
+    const inquiriesCount = allInquiries.length;
 
     if (!stats) {
       let postsCount = 0;
@@ -42,6 +43,7 @@ export const getDashboardStats = query({
         usersCount,
         commentsCount,
         newInquiriesCount,
+        inquiriesCount,
       };
     }
 
@@ -50,6 +52,7 @@ export const getDashboardStats = query({
       usersCount: stats.usersCount,
       commentsCount: stats.commentsCount,
       newInquiriesCount,
+      inquiriesCount,
     };
   },
 });
