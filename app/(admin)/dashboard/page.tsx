@@ -13,8 +13,8 @@ export default async function DashboardPage() {
   await connection();
 
   const [stats, posts] = await Promise.all([
-    fetchQuery(api.stats.getDashboardStats, {}, { next: { revalidate: 0 } }),
-    fetchQuery(api.posts.getPostsAdmin, {}, { next: { revalidate: 0 } }),
+    fetchQuery(api.stats.getDashboardStats),
+    fetchQuery(api.posts.getPostsAdmin),
   ]);
 
   const latestPosts = posts.slice(0, 5);
