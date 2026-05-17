@@ -7,12 +7,14 @@ import { MessageCircle, Newspaper, User, Inbox } from "lucide-react";
 import { connection } from "next/server";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   await connection();
 
   const [stats, posts] = await Promise.all([
-    fetchQuery(api.stats.getDashboardStats),
-    fetchQuery(api.posts.getPostsAdmin),
+    fetchQuery(api.stats.getDashboardStats, {}, { cache: "no-store" }),
+    fetchQuery(api.posts.getPostsAdmin, {}, { cache: "no-store" }),
   ]);
 
   const latestPosts = posts.slice(0, 5);
