@@ -203,14 +203,22 @@ Return only the JSON object.`;
         { role: "user", content: userPrompt },
       ],
       response_format: { type: "json_object" },
-      max_tokens: 10000,
+      max_tokens: 16000,
       temperature: 0.7,
     });
 
     const raw = completion.choices[0].message.content;
-    if (!raw) throw new Error("OpenAI returned empty content");
+    if (!raw) throw new Error("Gemini returned empty content");
 
-    const parsed = JSON.parse(raw) as { title: string; body: string };
+    let parsed: { title: string; body: string };
+    try {
+      parsed = JSON.parse(raw) as { title: string; body: string };
+    } catch (e) {
+      const finishReason = completion.choices[0].finish_reason;
+      throw new Error(
+        `JSON parse failed (finish_reason=${finishReason}, length=${raw.length}): ${String(e)}`
+      );
+    }
     const { title, body: rawBody } = parsed;
 
     // ── Fetch + upload hero image ────────────────────────────────────────────
