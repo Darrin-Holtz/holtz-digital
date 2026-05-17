@@ -11,3 +11,14 @@ export const getRecentPostSlugs = internalQuery({
       .map((p) => ({ title: p.title, slug: p.slug }));
   },
 });
+
+// Returns all AI-generated posts (id + body) for the image URL migration
+export const getAllAiPosts = internalQuery({
+  args: {},
+  handler: async (ctx) => {
+    const posts = await ctx.db.query("posts").collect();
+    return posts
+      .filter((p) => p.isAiGenerated === true)
+      .map((p) => ({ _id: p._id, body: p.body }));
+  },
+});

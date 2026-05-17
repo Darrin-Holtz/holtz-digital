@@ -1,6 +1,6 @@
 "use node";
 
-import { internalAction, ActionCtx } from "./_generated/server";
+import { internalAction, action, ActionCtx } from "./_generated/server";
 import { v } from "convex/values";
 import { internal } from "./_generated/api";
 import OpenAI from "openai";
@@ -267,6 +267,49 @@ Return only the JSON object.`;
       imageStorageId: heroStorageId as any,
       imageCredit,
     });
+  },
+});
+
+// ─── One-time migration: fix broken body image URLs ─────────────────────────
+// Old code constructed URLs as `/api/storage/<id>` (missing base URL).
+// This action resolves each storage ID to its real Convex URL and patches the body.
+export const fixBrokenBodyImageUrls = action({
+  args: {},
+  handler: async (ctx) => {
+    const posts = (await ctx.runQuery(internal.blogInternalQueries.getAllAiPosts, {})) as {
+      _id: string;
+      body: string;
+    }[];
+
+    let fixed = 0;
+    const brokenPattern = /src="\/api\/storage\/([^"]+)"/g;
+
+    for (const post of posts) {
+      if (!brokenPattern.test(post.body)) continue;
+
+      // Reset lastIndex after test()
+      brokenPattern.lastIndex = 0;
+
+      const matches = [...post.body.matchAll(/src="\/api\/storage\/([^"]+)"/g)];
+      if (matches.length === 0) continue;
+
+      let newBody = post.body;
+      for (const match of matches) {
+        const [fullAttr, storageId] = match;
+        const realUrl = await ctx.storage.getUrl(storageId as any);
+        if (realUrl) {
+          newBody = newBody.replace(fullAttr, `src="${realUrl}"`);
+        }
+      }
+
+      await ctx.runMutation(internal.posts.patchPostBody, {
+        postId: post._id as any,
+        body: newBody,
+      });
+      fixed++;
+    }
+
+    return { postsFixed: fixed };
   },
 });
 

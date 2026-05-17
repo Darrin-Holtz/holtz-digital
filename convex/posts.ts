@@ -5,6 +5,14 @@ import { Doc, Id } from "./_generated/dataModel";
 import { internal } from "./_generated/api";
 import { slugify } from "../lib/utils";
 
+// One-time migration helper: patch a single post's body HTML
+export const patchPostBody = internalMutation({
+  args: { postId: v.id("posts"), body: v.string() },
+  handler: async (ctx, args) => {
+    await ctx.db.patch(args.postId, { body: args.body });
+  },
+});
+
 // Create a new post with the given title and body
 export const createPost = mutation({
   args: { title: v.string(), body: v.string(), imageStorageId: v.optional(v.id("_storage")) },
